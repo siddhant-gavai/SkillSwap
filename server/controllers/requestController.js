@@ -82,3 +82,41 @@ exports.updateRequestStatus = asyncHandler(async (req, res) => {
 
     res.status(200).json(new ApiResponse(200, request, "Request status updated successfully"));
 });
+
+// @desc    Schedule a learning session
+// @route   PUT /api/requests/:id/schedule
+// @access  Private
+exports.scheduleSession = asyncHandler(async (req, res) => {
+    const { scheduledDate, scheduledTime, duration, meetingLink, sessionNote } = req.body;
+    let request = await ExchangeRequest.findById(req.params.id)
+        .populate('skillId')
+        .populate('requesterId', 'name email');
+
+    if (!request) {
+        throw new ApiError(404, 'Request not found');
+    }
+
+    if (request.status !== 'ACCEPTED') {
+        throw new ApiError(400, 'Cannot schedule session for unaccepted request');
+    }
+
+    // Verify ownership: requester OR skill owner can schedule
+    const isRequester = request.requesterId._id.toString() === req.user.id;
+    const isOwner = request.skillId.ownerId.toString() === req.user.id;
+
+    if (!isRequester && !isOwner) {
+        throw new ApiError(401, 'Not authorized to schedule this session');
+    }
+
+    // Update request with schedule details
+    request.scheduledDate = scheduledDate;
+    request.scheduledTime = scheduledTime;
+    request.duration = duration;
+    request.meetingLink = meetingLink;
+    request.sessionNote = sessionNote;
+    request.isScheduled = true;
+
+    await request.save();
+
+    res.status(200).json(new ApiResponse(200, request, "Session scheduled successfully"));
+});

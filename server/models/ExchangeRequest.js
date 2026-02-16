@@ -24,6 +24,32 @@ const exchangeRequestSchema = new mongoose.Schema({
     date: {
         type: Date,
         default: Date.now
+    },
+    scheduledDate: {
+        type: Date
+    },
+    scheduledTime: {
+        type: String
+    },
+    duration: {
+        type: Number, // in minutes
+        min: 15,
+        max: 180
+    },
+    meetingLink: {
+        type: String,
+        match: [
+            /^(https?:\/\/)?([\da-z\.-]+)\.([a-z\.]{2,6})([\/\w \.-]*)*\/?$/,
+            'Please provide a valid URL'
+        ]
+    },
+    sessionNote: {
+        type: String,
+        maxlength: 200
+    },
+    isScheduled: {
+        type: Boolean,
+        default: false
     }
 }, {
     timestamps: true

@@ -8,14 +8,15 @@ SkillSwap is a peer-to-peer skill exchange platform where users can trade skills
 - **Skill Listings**: Post skills you offer with categories and levels.
 - **Skill Browsing**: Search and filter skills by category.
 - **Exchange Requests**: Request to learn a skill from another user.
+- **Smart Scheduling**: Integration with **Google Meet** for instant sessions and **Google Calendar** for scheduling.
 - **Dashboard**: Manage your offered skills and track sent/received requests.
-- **Reviews**: Rate and review users after exchanges (Backend implemented).
-- **Responsive UI**: Built with Tailwind CSS for a modern look.
+- **Reviews**: Rate and review users after exchanges.
+- **Responsive UI**: Built with Tailwind CSS and dark mode support.
 
 ## Tech Stack
 
 - **Frontend**: React (Vite), Tailwind CSS, Lucide React, Axios.
-- **Backend**: Node.js, Express.js, MongoDB (Mongoose).
+- **Backend**: Node.js, Express.js, MongoDB Atlas (Mongoose).
 - **Auth**: JSON Web Tokens (JWT), BCrypt.
 
 ## Getting Started
@@ -23,7 +24,7 @@ SkillSwap is a peer-to-peer skill exchange platform where users can trade skills
 ### Prerequisites
 
 - Node.js
-- MongoDB (Local or AtlasURI)
+- MongoDB Atlas Account
 
 ### Installation
 
@@ -39,7 +40,7 @@ SkillSwap is a peer-to-peer skill exchange platform where users can trade skills
    npm install
    # Create a .env file with:
    # PORT=5001
-   # MONGO_URI=mongodb://localhost:27017/skillswap
+   # MONGO_URI=mongodb+srv://<username>:<password>@cluster0.mongodb.net/skillswapDB
    # JWT_SECRET=your_super_secret_key
    npm run dev
    ```
@@ -58,12 +59,12 @@ SkillSwap is a peer-to-peer skill exchange platform where users can trade skills
 
 - `client/`: React frontend.
 - `server/`: Node.js/Express backend.
-- `server/models/`: Mongoose models (User, Skill, ExchangeRequest, Review).
+- `server/models/`: Mongoose models (User, Skill, Request, Session).
 - `server/controllers/`: Route logic.
 - `server/routes/`: API routes.
 
 ## Future Improvements
 
-- AI-based skill recommendations (Placeholder services added).
+- AI-based skill recommendations.
 - Real-time chat for accepted exchanges.
-- Video call integration.
+- In-app video calls (WebRTC).

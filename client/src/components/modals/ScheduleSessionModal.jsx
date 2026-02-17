@@ -66,34 +66,32 @@ const ScheduleSessionModal = ({ isOpen, onClose, request, onSchedule }) => {
                         </div>
                     )}
 
-                    <form onSubmit={handleSubmit} className="space-y-4">
+                    <form onSubmit={handleSubmit} className="space-y-6">
                         <div className="grid grid-cols-2 gap-4">
                             <div>
-                                <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Date</label>
+                                <label className="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-1">Date</label>
                                 <Input
                                     type="date"
                                     name="scheduledDate"
                                     value={formData.scheduledDate}
                                     onChange={handleChange}
                                     required
-                                    className="w-full"
                                 />
                             </div>
                             <div>
-                                <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Time</label>
+                                <label className="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-1">Time</label>
                                 <Input
                                     type="time"
                                     name="scheduledTime"
                                     value={formData.scheduledTime}
                                     onChange={handleChange}
                                     required
-                                    className="w-full"
                                 />
                             </div>
                         </div>
 
                         <div>
-                            <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Duration (minutes)</label>
+                            <label className="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-1">Duration (minutes)</label>
                             <select
                                 name="duration"
                                 value={formData.duration}
@@ -110,19 +108,31 @@ const ScheduleSessionModal = ({ isOpen, onClose, request, onSchedule }) => {
                         </div>
 
                         <div>
-                            <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Meeting Link (Optional)</label>
-                            <Input
-                                type="url"
-                                name="meetingLink"
-                                value={formData.meetingLink}
-                                onChange={handleChange}
-                                placeholder="https://meet.google.com/..."
-                                className="w-full"
-                            />
+                            <label className="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-1">Meeting Link (Optional)</label>
+                            <div className="flex gap-3">
+                                <div className="flex-grow">
+                                    <Input
+                                        type="url"
+                                        name="meetingLink"
+                                        value={formData.meetingLink}
+                                        onChange={handleChange}
+                                        placeholder="Paste Google Calendar link..."
+                                        className="w-full"
+                                    />
+                                </div>
+                                <Button
+                                    type="button"
+                                    variant="secondary"
+                                    onClick={() => window.open('https://calendar.google.com/calendar/u/0/r/eventedit', '_blank')}
+                                    className="whitespace-nowrap"
+                                >
+                                    Schedule in Google Calendar
+                                </Button>
+                            </div>
                         </div>
 
                         <div>
-                            <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Note (Optional)</label>
+                            <label className="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-1">Note (Optional)</label>
                             <textarea
                                 name="sessionNote"
                                 value={formData.sessionNote}
@@ -133,7 +143,7 @@ const ScheduleSessionModal = ({ isOpen, onClose, request, onSchedule }) => {
                             ></textarea>
                         </div>
 
-                        <div className="flex justify-end space-x-3 mt-6">
+                        <div className="flex justify-end space-x-3 mt-8">
                             <Button type="button" variant="secondary" onClick={onClose}>
                                 Cancel
                             </Button>
@@ -143,8 +153,8 @@ const ScheduleSessionModal = ({ isOpen, onClose, request, onSchedule }) => {
                         </div>
                     </form>
                 </div>
-            </div>
-        </div>
+            </div >
+        </div >
     );
 };
 

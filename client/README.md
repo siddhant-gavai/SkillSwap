@@ -27,3 +27,5 @@ npm run build
 ## Linting
 
 If you use ESLint, clean up the configuration to support React + JavaScript.
+
+This project is a React application built with Vite.

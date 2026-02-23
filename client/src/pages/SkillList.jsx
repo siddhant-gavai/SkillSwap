@@ -85,4 +85,4 @@ const SkillList = () => {
     );
 };
 
-export default SkillList;
+export default SkillList; // Export the component

@@ -5,6 +5,7 @@ import api from '../services/api';
 import { Link } from 'react-router-dom';
 import Button from '../components/common/Button';
 
+
 const SkillList = () => {
     const [skills, setSkills] = useState([]);
     const [loading, setLoading] = useState(true);
@@ -46,6 +47,7 @@ const SkillList = () => {
                             proximity={100}
                             inactiveZone={0.01}
                             borderWidth={3}
+
                         />
                         <div className="relative z-10 flex flex-col h-full">
                             <div className="p-6 flex-1">

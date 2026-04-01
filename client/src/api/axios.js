@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 const instance = axios.create({
-    baseURL: 'http://localhost:5001/api'
+    baseURL: 'https://skillswap-l8ii.onrender.com/api'
 });
 
 // Add a request interceptor to add the token to headers

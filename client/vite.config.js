@@ -13,9 +13,9 @@ export default defineConfig({
         port: 5173,
         proxy: {
             '/api': {
-                target: 'http://localhost:5001',
+                target: 'https://skillswap-l8ii.onrender.com',
                 changeOrigin: true,
-                secure: false,
+                secure: true,
             },
         },
     },

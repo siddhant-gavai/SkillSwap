@@ -4,11 +4,34 @@ import GlowingEffect from '../components/ui/GlowingEffect';
 import api from '../services/api';
 import { Link } from 'react-router-dom';
 import Button from '../components/common/Button';
+import { useAuth } from '../context/AuthContext';
+import { Trash2 } from 'lucide-react';
 
 
 const SkillList = () => {
+    const { user } = useAuth();
     const [skills, setSkills] = useState([]);
     const [loading, setLoading] = useState(true);
+    const [deletingSkillId, setDeletingSkillId] = useState(null);
+    const [actionMessage, setActionMessage] = useState(null);
+
+    const handleDeleteSkill = async (skillId) => {
+        if (!window.confirm("Are you sure you want to delete this skill?")) return;
+        
+        setDeletingSkillId(skillId);
+        try {
+            await api.delete(`/skills/${skillId}`);
+            setSkills(skills.filter(s => s._id !== skillId));
+            setActionMessage({ type: 'success', text: 'Skill deleted successfully' });
+            setTimeout(() => setActionMessage(null), 3000);
+        } catch (error) {
+            console.error('Error deleting skill:', error);
+            setActionMessage({ type: 'error', text: 'Failed to delete skill' });
+            setTimeout(() => setActionMessage(null), 3000);
+        } finally {
+            setDeletingSkillId(null);
+        }
+    };
 
     useEffect(() => {
         const fetchSkills = async () => {
@@ -36,6 +59,16 @@ const SkillList = () => {
                 {/* Search/Filter could go here */}
             </div>
 
+            {actionMessage && (
+                <div className={`mb-6 px-4 py-3 rounded-lg text-sm font-medium ${
+                    actionMessage.type === 'success' 
+                        ? 'bg-green-100 border border-green-400 text-green-700' 
+                        : 'bg-red-100 border border-red-400 text-red-700'
+                }`}>
+                    {actionMessage.text}
+                </div>
+            )}
+
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
                 {skills.map(skill => (
                     <div key={skill._id} className="relative bg-white/40 dark:bg-slate-800/40 backdrop-blur-xl rounded-2xl shadow-xl hover:shadow-2xl hover:-translate-y-2 transition-all duration-300 overflow-hidden flex flex-col group border border-white/20 dark:border-slate-700/30">
@@ -55,7 +88,19 @@ const SkillList = () => {
                                     <span className="inline-block bg-gradient-to-r from-blue-500 to-indigo-600 text-white text-[10px] font-bold px-3 py-1 rounded-full uppercase tracking-widest shadow-lg shadow-blue-500/30">
                                         {skill.category}
                                     </span>
-                                    <span className="text-slate-500 dark:text-slate-400 text-xs font-medium tracking-wide border border-slate-200 dark:border-slate-700 px-2 py-1 rounded-md">{skill.level}</span>
+                                    <div className="flex gap-2 items-center">
+                                        <span className="text-slate-500 dark:text-slate-400 text-xs font-medium tracking-wide border border-slate-200 dark:border-slate-700 px-2 py-1 rounded-md">{skill.level}</span>
+                                        {user && skill.ownerId?._id === user._id && (
+                                            <button
+                                                onClick={() => handleDeleteSkill(skill._id)}
+                                                disabled={deletingSkillId === skill._id}
+                                                className="text-red-500 hover:text-red-700 hover:bg-red-50 dark:hover:bg-red-900/30 p-1 rounded transition-colors disabled:opacity-50"
+                                                title="Delete Skill"
+                                            >
+                                                <Trash2 size={16} />
+                                            </button>
+                                        )}
+                                    </div>
                                 </div>
                                 <h2 className="text-2xl font-bold text-slate-900 dark:text-white mb-3 font-heading leading-tight group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors">{skill.title}</h2>
                                 <p className="text-slate-600 dark:text-slate-300 text-sm mb-6 line-clamp-3 leading-relaxed">{skill.description}</p>

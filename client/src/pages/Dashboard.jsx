@@ -6,7 +6,7 @@ import api from '../services/api';
 import Button from '../components/common/Button';
 import { Link } from 'react-router-dom';
 import ScheduleSessionModal from '../components/modals/ScheduleSessionModal';
-import { Calendar, Clock, Video } from 'lucide-react';
+import { Calendar, Clock, Video, Trash2 } from 'lucide-react';
 
 const Dashboard = () => {
     const { user } = useAuth();
@@ -16,6 +16,26 @@ const Dashboard = () => {
     const [loading, setLoading] = useState(true);
     const [isScheduleModalOpen, setIsScheduleModalOpen] = useState(false);
     const [selectedRequest, setSelectedRequest] = useState(null);
+    const [deletingSkillId, setDeletingSkillId] = useState(null);
+    const [actionMessage, setActionMessage] = useState(null);
+
+    const handleDeleteSkill = async (skillId) => {
+        if (!window.confirm("Are you sure you want to delete this skill?")) return;
+
+        setDeletingSkillId(skillId);
+        try {
+            await api.delete(`/skills/${skillId}`);
+            setMySkills(mySkills.filter(skill => skill._id !== skillId));
+            setActionMessage({ type: 'success', text: 'Skill deleted successfully' });
+            setTimeout(() => setActionMessage(null), 3000);
+        } catch (error) {
+            console.error('Error deleting skill:', error);
+            setActionMessage({ type: 'error', text: 'Failed to delete skill' });
+            setTimeout(() => setActionMessage(null), 3000);
+        } finally {
+            setDeletingSkillId(null);
+        }
+    };
 
     useEffect(() => {
         const fetchData = async () => {
@@ -148,6 +168,15 @@ const Dashboard = () => {
                                 <Button variant="primary" className="text-sm shadow-blue-500/20 shadow-lg">New Skill</Button>
                             </Link>
                         </div>
+                        
+                        {actionMessage && (
+                            <div className={`mb-4 px-4 py-3 rounded-lg text-sm font-medium ${
+                                actionMessage.type === 'success' ? 'bg-green-100 border border-green-400 text-green-700' : 'bg-red-100 border border-red-400 text-red-700'
+                            }`}>
+                                {actionMessage.text}
+                            </div>
+                        )}
+
                         {mySkills.length === 0 ? (
                             <div className="text-center py-8">
                                 <p className="text-slate-500 dark:text-slate-400 mb-4">You haven't listed any skills yet.</p>
@@ -164,7 +193,14 @@ const Dashboard = () => {
                                             <span className="inline-block mt-1 text-xs font-bold uppercase tracking-wider bg-blue-100/80 text-blue-700 dark:bg-blue-900/50 dark:text-blue-300 px-2 py-0.5 rounded-md">{skill.category}</span>
                                         </div>
                                         <div className="opacity-0 group-hover/item:opacity-100 transition-opacity transform translate-x-2 group-hover/item:translate-x-0">
-                                            {/* Could add edit/delete actions here later */}
+                                            <button
+                                                onClick={() => handleDeleteSkill(skill._id)}
+                                                disabled={deletingSkillId === skill._id}
+                                                className="p-2 text-red-500 hover:text-red-700 hover:bg-red-50 dark:hover:bg-red-900/30 rounded-full transition-colors disabled:opacity-50"
+                                                title="Delete Skill"
+                                            >
+                                                <Trash2 size={18} />
+                                            </button>
                                         </div>
                                     </li>
                                 ))}

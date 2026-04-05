@@ -14,6 +14,8 @@ const ScheduleSessionModal = ({ isOpen, onClose, request, onSchedule }) => {
     });
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState('');
+    const [success, setSuccess] = useState('');
+    const [isAutoScheduling, setIsAutoScheduling] = useState(false);
 
     if (!isOpen || !request) return null;
 
@@ -33,6 +35,42 @@ const ScheduleSessionModal = ({ isOpen, onClose, request, onSchedule }) => {
             setError(err.response?.data?.message || 'Failed to schedule session');
         } finally {
             setLoading(false);
+        }
+    };
+
+    const handleAutoSchedule = async () => {
+        if (!formData.scheduledDate || !formData.scheduledTime) {
+            setError('Please select Date and Time first');
+            return;
+        }
+
+        setError('');
+        setSuccess('');
+        setIsAutoScheduling(true);
+
+        try {
+            const randomString = () => Math.random().toString(36).substring(2, 6);
+            const generatedLink = `https://meet.google.com/${randomString()}-${randomString()}-${randomString()}`;
+            
+            const updatedFormData = {
+                ...formData,
+                meetingLink: generatedLink
+            };
+            
+            setFormData(updatedFormData);
+
+            await onSchedule(request._id, updatedFormData);
+            
+            setSuccess('Session scheduled successfully');
+            
+            setTimeout(() => {
+                onClose();
+                setSuccess('');
+            }, 2000);
+        } catch (err) {
+            setError(err.response?.data?.message || 'Failed to schedule session');
+        } finally {
+            setIsAutoScheduling(false);
         }
     };
 
@@ -63,6 +101,11 @@ const ScheduleSessionModal = ({ isOpen, onClose, request, onSchedule }) => {
                     {error && (
                         <div className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded mb-6 text-sm">
                             {error}
+                        </div>
+                    )}
+                    {success && (
+                        <div className="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded mb-6 text-sm">
+                            {success}
                         </div>
                     )}
 
@@ -132,10 +175,11 @@ const ScheduleSessionModal = ({ isOpen, onClose, request, onSchedule }) => {
                                 <Button
                                     type="button"
                                     variant="secondary"
-                                    onClick={() => window.open('https://calendar.google.com/calendar/r/eventedit', '_blank')}
-                                    className="w-full py-2.5 text-sm font-medium hover:bg-slate-100 dark:hover:bg-slate-700 border border-gray-200 dark:border-slate-600"
+                                    onClick={handleAutoSchedule}
+                                    disabled={isAutoScheduling}
+                                    className="w-full py-2.5 text-sm font-medium hover:bg-slate-100 dark:hover:bg-slate-700 border border-gray-200 dark:border-slate-600 disabled:opacity-70 disabled:cursor-not-allowed"
                                 >
-                                    Schedule in Calendar
+                                    {isAutoScheduling ? 'Scheduling...' : 'Schedule Session'}
                                 </Button>
                             </div>
                         </div>

@@ -87,8 +87,8 @@ exports.deleteSkill = asyncHandler(async (req, res) => {
         throw new ApiError(401, 'User not found');
     }
 
-    // Make sure the logged in user matches the skill owner
-    if (skill.ownerId.toString() !== req.user.id) {
+    // Make sure the logged in user matches the skill owner or is an admin
+    if (skill.ownerId.toString() !== req.user.id && req.user.role !== 'admin') {
         throw new ApiError(401, 'User not authorized');
     }
 

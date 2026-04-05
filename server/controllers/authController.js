@@ -39,6 +39,7 @@ exports.register = asyncHandler(async (req, res) => {
                 _id: user.id,
                 name: user.name,
                 email: user.email,
+                role: user.role,
                 token: generateToken(user._id)
             }, "User registered successfully")
         );
@@ -62,6 +63,7 @@ exports.login = asyncHandler(async (req, res) => {
                 _id: user.id,
                 name: user.name,
                 email: user.email,
+                role: user.role,
                 token: generateToken(user._id)
             }, "User logged in successfully")
         );

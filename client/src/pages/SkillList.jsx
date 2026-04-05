@@ -90,15 +90,20 @@ const SkillList = () => {
                                     </span>
                                     <div className="flex gap-2 items-center">
                                         <span className="text-slate-500 dark:text-slate-400 text-xs font-medium tracking-wide border border-slate-200 dark:border-slate-700 px-2 py-1 rounded-md">{skill.level}</span>
-                                        {user && skill.ownerId?._id === user._id && (
-                                            <button
-                                                onClick={() => handleDeleteSkill(skill._id)}
-                                                disabled={deletingSkillId === skill._id}
-                                                className="text-red-500 hover:text-red-700 hover:bg-red-50 dark:hover:bg-red-900/30 p-1 rounded transition-colors disabled:opacity-50"
-                                                title="Delete Skill"
-                                            >
-                                                <Trash2 size={16} />
-                                            </button>
+                                        {user && (skill.ownerId?._id === user._id || user.role === 'admin') && (
+                                            <div className="flex items-center gap-2">
+                                                {user.role === 'admin' && skill.ownerId?._id !== user._id && (
+                                                    <span className="bg-red-100 text-red-800 text-[10px] font-bold px-2 py-0.5 rounded-full uppercase">Admin</span>
+                                                )}
+                                                <button
+                                                    onClick={() => handleDeleteSkill(skill._id)}
+                                                    disabled={deletingSkillId === skill._id}
+                                                    className="text-red-500 hover:text-red-700 hover:bg-red-50 dark:hover:bg-red-900/30 p-1 rounded transition-colors disabled:opacity-50"
+                                                    title="Delete Skill"
+                                                >
+                                                    <Trash2 size={16} />
+                                                </button>
+                                            </div>
                                         )}
                                     </div>
                                 </div>

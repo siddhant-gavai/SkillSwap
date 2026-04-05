@@ -25,6 +25,11 @@ const userSchema = new mongoose.Schema({
         type: String,
         default: 'https://via.placeholder.com/150'
     },
+    role: {
+        type: String,
+        enum: ["user", "admin"],
+        default: "user"
+    },
     bio: {
         type: String,
         maxlength: 500

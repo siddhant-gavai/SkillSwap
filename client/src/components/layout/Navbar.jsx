@@ -14,10 +14,10 @@ const Navbar = () => {
                 <div className="flex justify-between h-16">
                     <div className="flex items-center">
                         <Link to="/" className="flex items-center space-x-2 group">
-                            <div className="bg-gradient-to-tr from-blue-600 to-purple-600 p-2 rounded-lg group-hover:scale-105 transition-transform duration-300">
+                            <div className="bg-gradient-to-tr from-indigo-500 to-pink-500 p-2 rounded-lg group-hover:scale-105 transition-transform duration-300 animate-float-slow shadow-lg shadow-indigo-500/30">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-white w-5 h-5"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon></svg>
                             </div>
-                            <span className="text-2xl font-extrabold bg-clip-text text-transparent bg-gradient-to-r from-blue-600 to-purple-600 dark:from-blue-400 dark:to-purple-400 font-heading tracking-tight group-hover:opacity-90 transition-opacity">
+                            <span className="text-2xl font-extrabold bg-clip-text text-transparent bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 dark:from-indigo-400 dark:via-purple-400 dark:to-pink-400 font-heading tracking-tight group-hover:opacity-90 transition-opacity">
                                 SkillSwap
                             </span>
                         </Link>

@@ -97,13 +97,13 @@ const Dashboard = () => {
     return (
         <Layout>
             <div className="mb-8">
-                <h1 className="text-3xl font-bold text-gray-900 dark:text-white">Welcome, {user?.name}!</h1>
-                <p className="text-gray-600 dark:text-gray-400 mt-2">Manage your skills and exchange requests here.</p>
+                <h1 className="text-3xl font-bold text-gray-800 dark:text-white">Welcome, {user?.name}!</h1>
+                <p className="text-gray-500 dark:text-gray-400 mt-2">Manage your skills and exchange requests here.</p>
             </div>
 
             {/* Upcoming Sessions Section */}
             {upcomingSessions.length > 0 && (
-                <div className="mb-10 relative bg-white/40 dark:bg-slate-800/40 backdrop-blur-xl p-8 rounded-2xl shadow-2xl border border-white/20 dark:border-slate-700/30 overflow-hidden group">
+                <div className="mb-10 relative bg-white dark:bg-[#13131A] p-8 rounded-xl shadow-sm hover:shadow-md border border-gray-200 dark:border-[#2A2A2A] overflow-hidden group transition-all">
                     <div className="absolute inset-0 bg-gradient-to-br from-purple-500/5 to-blue-500/5 dark:from-purple-500/10 dark:to-blue-500/10 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
                     <GlowingEffect
                         spread={60}
@@ -119,9 +119,9 @@ const Dashboard = () => {
                         </h2>
                         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                             {upcomingSessions.map(session => (
-                                <div key={session._id} className="bg-white/60 dark:bg-slate-700/60 backdrop-blur-sm p-5 rounded-xl border border-white/40 dark:border-slate-600/50 shadow-sm hover:shadow-md transition-shadow">
-                                    <h3 className="font-bold text-lg text-slate-800 dark:text-slate-100 mb-2 font-heading">{session.skillId.title}</h3>
-                                    <p className="text-sm text-slate-600 dark:text-slate-300 mb-3 font-medium">
+                                <div key={session._id} className="bg-white dark:bg-[#15151A] p-5 rounded-xl border border-gray-200 dark:border-[#2A2A2A] shadow-sm hover:shadow-md transition-shadow">
+                                    <h3 className="font-bold text-lg text-gray-800 dark:text-slate-100 mb-2 font-heading">{session.skillId.title}</h3>
+                                    <p className="text-sm text-gray-500 dark:text-slate-300 mb-3 font-medium">
                                         with {session.requesterId._id === user._id ? session.skillId.ownerId.name : session.requesterId.name}
                                     </p>
                                     <div className="space-y-2 text-sm">
@@ -151,7 +151,7 @@ const Dashboard = () => {
 
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
                 {/* My Skills Section */}
-                <div className="relative bg-white/40 dark:bg-slate-800/40 backdrop-blur-xl p-8 rounded-2xl shadow-xl border border-white/20 dark:border-slate-700/30 transition-all duration-300 hover:shadow-2xl hover:-translate-y-1 group">
+                <div className="relative bg-white dark:bg-[#13131A] p-8 rounded-xl shadow-sm hover:shadow-md border border-gray-200 dark:border-[#2A2A2A] transition-all duration-300 group">
                     <div className="absolute inset-0 bg-gradient-to-br from-blue-500/5 to-cyan-500/5 dark:from-blue-500/10 dark:to-cyan-500/10 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
                     <GlowingEffect
                         spread={60}
@@ -165,7 +165,7 @@ const Dashboard = () => {
                         <div className="flex justify-between items-end mb-6">
                             <h2 className="text-2xl font-bold font-heading text-slate-800 dark:text-slate-100 border-l-4 border-blue-500 pl-3">My Skills Offered</h2>
                             <Link to="/skills/new">
-                                <Button variant="primary" className="text-sm shadow-blue-500/20 shadow-lg">New Skill</Button>
+                                <Button variant="primary" className="text-sm">New Skill</Button>
                             </Link>
                         </div>
                         
@@ -187,9 +187,9 @@ const Dashboard = () => {
                         ) : (
                             <ul className="space-y-4">
                                 {mySkills.map(skill => (
-                                    <li key={skill._id} className="relative overflow-hidden bg-white/50 dark:bg-slate-700/40 p-4 rounded-xl border border-slate-100 dark:border-slate-700 hover:border-blue-300 dark:hover:border-blue-700 transition-all flex justify-between items-center group/item">
+                                    <li key={skill._id} className="relative overflow-hidden bg-white dark:bg-slate-700/40 p-4 rounded-xl border border-gray-200 dark:border-slate-700 hover:border-blue-300 dark:hover:border-blue-700 shadow-sm hover:shadow-md transition-all flex justify-between items-center group/item">
                                         <div>
-                                            <h3 className="font-bold text-lg text-slate-800 dark:text-slate-100 font-heading group-hover/item:text-blue-600 dark:group-hover/item:text-blue-400 transition-colors">{skill.title}</h3>
+                                            <h3 className="font-bold text-lg text-gray-800 dark:text-slate-100 font-heading group-hover/item:text-blue-600 dark:group-hover/item:text-blue-400 transition-colors">{skill.title}</h3>
                                             <span className="inline-block mt-1 text-xs font-bold uppercase tracking-wider bg-blue-100/80 text-blue-700 dark:bg-blue-900/50 dark:text-blue-300 px-2 py-0.5 rounded-md">{skill.category}</span>
                                         </div>
                                         <div className="opacity-0 group-hover/item:opacity-100 transition-opacity transform translate-x-2 group-hover/item:translate-x-0">
@@ -212,7 +212,7 @@ const Dashboard = () => {
                 {/* Requests Overview */}
                 <div className="space-y-8">
                     {/* Received Requests */}
-                    <div className="relative bg-white/40 dark:bg-slate-800/40 backdrop-blur-xl p-8 rounded-2xl shadow-xl border border-white/20 dark:border-slate-700/30 transition-all duration-300 hover:shadow-2xl hover:-translate-y-1">
+                    <div className="relative bg-white dark:bg-[#13131A] p-8 rounded-xl shadow-sm hover:shadow-md border border-gray-200 dark:border-[#2A2A2A] transition-all duration-300">
                         <GlowingEffect
                             spread={60}
                             glow={true}
@@ -228,11 +228,11 @@ const Dashboard = () => {
                             ) : (
                                 <ul className="space-y-4">
                                     {receivedRequests.map(req => (
-                                        <li key={req._id} className="bg-white/60 dark:bg-slate-700/60 backdrop-blur-sm p-4 rounded-xl border border-slate-200 dark:border-slate-600 shadow-sm">
+                                        <li key={req._id} className="bg-white dark:bg-slate-700/60 p-4 rounded-xl border border-gray-200 dark:border-slate-600 shadow-sm">
                                             <div className="flex justify-between items-start mb-3">
                                                 <div>
-                                                    <p className="font-bold text-lg font-heading text-slate-800 dark:text-slate-100">{req.skillId?.title}</p>
-                                                    <p className="text-sm text-slate-600 dark:text-slate-300">From: <span className="font-semibold">{req.requesterId?.name}</span></p>
+                                                    <p className="font-bold text-lg font-heading text-gray-800 dark:text-slate-100">{req.skillId?.title}</p>
+                                                    <p className="text-sm text-gray-500 dark:text-slate-300">From: <span className="font-semibold">{req.requesterId?.name}</span></p>
                                                 </div>
                                                 <div className={`text-xs font-bold px-3 py-1 rounded-full uppercase tracking-wider shadow-sm ${req.status === 'PENDING' ? 'bg-orange-100 text-orange-700' :
                                                         req.status === 'ACCEPTED' ? 'bg-green-100 text-green-700' : 'bg-red-100 text-red-700'
@@ -245,12 +245,12 @@ const Dashboard = () => {
                                             </div>
                                             <div className="flex space-x-3">
                                                 {req.status === 'PENDING' && (
-                                                    <Button onClick={() => handleAcceptRequest(req._id)} variant="primary" className="text-xs py-2 px-4 w-full justify-center shadow-green-500/20 bg-green-600 hover:bg-green-700 border-none">
+                                                    <Button onClick={() => handleAcceptRequest(req._id)} variant="success" className="text-xs py-2 px-4 w-full justify-center">
                                                         Accept Request
                                                     </Button>
                                                 )}
                                                 {req.status === 'ACCEPTED' && (
-                                                    <Button onClick={() => openScheduleModal(req)} variant="secondary" className="text-xs py-2 px-4 w-full justify-center bg-purple-50 text-purple-700 hover:bg-purple-100 dark:bg-purple-900/20 dark:text-purple-300 dark:hover:bg-purple-900/40 border border-purple-200 dark:border-purple-800">
+                                                    <Button onClick={() => openScheduleModal(req)} variant="secondary" className="text-xs py-2 px-4 w-full justify-center">
                                                         {req.isScheduled ? 'Reschedule Session' : 'Schedule Session'}
                                                     </Button>
                                                 )}
@@ -263,7 +263,7 @@ const Dashboard = () => {
                     </div>
 
                     {/* Sent Requests */}
-                    <div className="relative bg-white/40 dark:bg-slate-800/40 backdrop-blur-xl p-8 rounded-2xl shadow-xl border border-white/20 dark:border-slate-700/30 transition-all duration-300 hover:shadow-2xl hover:-translate-y-1">
+                    <div className="relative bg-white dark:bg-[#13131A] p-8 rounded-xl shadow-sm hover:shadow-md border border-gray-200 dark:border-[#2A2A2A] transition-all duration-300">
                         <GlowingEffect
                             spread={60}
                             glow={true}
@@ -279,11 +279,11 @@ const Dashboard = () => {
                             ) : (
                                 <ul className="space-y-4">
                                     {sentRequests.map(req => (
-                                        <li key={req._id} className="bg-white/60 dark:bg-slate-700/60 backdrop-blur-sm p-4 rounded-xl border border-slate-200 dark:border-slate-600 shadow-sm opacity-90 hover:opacity-100 transition-opacity">
+                                        <li key={req._id} className="bg-white dark:bg-slate-700/60 p-4 rounded-xl border border-gray-200 dark:border-slate-600 shadow-sm opacity-90 hover:opacity-100 transition-opacity">
                                             <div className="flex justify-between items-start mb-2">
                                                 <div>
-                                                    <p className="font-bold text-lg font-heading text-slate-800 dark:text-slate-100">{req.skillId?.title}</p>
-                                                    <p className="text-sm text-slate-600 dark:text-slate-300">To: <span className="font-semibold">{req.skillId?.ownerId?.name}</span></p>
+                                                    <p className="font-bold text-lg font-heading text-gray-800 dark:text-slate-100">{req.skillId?.title}</p>
+                                                    <p className="text-sm text-gray-500 dark:text-slate-300">To: <span className="font-semibold">{req.skillId?.ownerId?.name}</span></p>
                                                 </div>
                                                 <span className={`text-xs font-bold px-3 py-1 rounded-full uppercase tracking-wider shadow-sm ${req.status === 'ACCEPTED' ? 'bg-green-100 text-green-700' :
                                                         req.status === 'REJECTED' ? 'bg-red-100 text-red-700' :
@@ -294,7 +294,7 @@ const Dashboard = () => {
                                             </div>
                                             {req.status === 'ACCEPTED' && (
                                                 <div className="mt-4 pt-3 border-t border-slate-200 dark:border-slate-600">
-                                                    <Button onClick={() => openScheduleModal(req)} variant="secondary" className="text-xs py-2 px-4 w-full justify-center bg-purple-50 text-purple-700 hover:bg-purple-100 dark:bg-purple-900/20 dark:text-purple-300 border border-purple-200 dark:border-purple-800">
+                                                    <Button onClick={() => openScheduleModal(req)} variant="secondary" className="text-xs py-2 px-4 w-full justify-center">
                                                         {req.isScheduled ? 'Manage Session' : 'Schedule Session'}
                                                     </Button>
                                                 </div>

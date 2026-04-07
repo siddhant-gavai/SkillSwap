@@ -52,12 +52,12 @@ const SkillList = () => {
     return (
         <Layout>
             <div className="mb-10">
-                <h1 className="text-5xl font-extrabold text-white mb-3">Explore Skills</h1>
-                <p className="text-[#A0A0A0] text-lg mb-8">Find the perfect skill to begin today</p>
+                <h1 className="text-5xl font-extrabold text-gray-800 dark:text-white mb-3">Explore Skills</h1>
+                <p className="text-gray-500 dark:text-[#A0A0A0] text-lg mb-8">Find the perfect skill to begin today</p>
                 
                 <div className="relative max-w-2xl">
                     <div className="absolute inset-y-0 left-0 pl-5 flex items-center pointer-events-none">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-[#6A6A6A]">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-slate-400 dark:text-[#6A6A6A]">
                             <circle cx="11" cy="11" r="8"></circle>
                             <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
                         </svg>
@@ -65,7 +65,7 @@ const SkillList = () => {
                     <input 
                         type="text" 
                         placeholder="Search skills..." 
-                        className="w-full bg-[#15151A] text-white border border-[#2A2A2A] rounded-2xl py-4 pl-12 pr-4 focus:outline-none focus:border-[#38bdf8] transition-colors shadow-sm"
+                        className="w-full bg-white dark:bg-[#15151A] text-gray-800 dark:text-white border border-gray-200 dark:border-[#2A2A2A] rounded-2xl py-4 pl-12 pr-4 focus:outline-none focus:border-[#38bdf8] transition-colors shadow-sm"
                     />
                 </div>
             </div>
@@ -88,13 +88,13 @@ const SkillList = () => {
                         : 'bg-[#9D72FF]/10 text-[#9D72FF] border-[#9D72FF]/30';
 
                     return (
-                        <div key={skill._id} className="bg-[#13131A] rounded-2xl border border-[#2A2A2A] overflow-hidden flex flex-col hover:border-[#3A3A3A] transition-colors p-6">
+                        <div key={skill._id} className="bg-white dark:bg-[#13131A] rounded-xl border border-gray-200 dark:border-[#2A2A2A] overflow-hidden flex flex-col hover:shadow-md dark:hover:shadow-none hover:border-gray-300 dark:hover:border-[#3A3A3A] transition-all p-6 shadow-sm">
                             <div className="flex justify-between items-start mb-4">
                                 <span className={`border text-[10px] uppercase font-bold px-3 py-1 rounded-full ${badgeClass}`}>
                                     {skill.category}
                                 </span>
                                 <div className="flex gap-2 items-center">
-                                    <span className="text-[#A0A0A0] text-xs font-medium">{skill.level || 'Any level'}</span>
+                                    <span className="text-gray-500 dark:text-[#A0A0A0] text-xs font-medium">{skill.level || 'Any level'}</span>
                                     {user && (skill.ownerId?._id === user._id || user.role === 'admin') && (
                                         <button
                                             onClick={() => handleDeleteSkill(skill._id)}
@@ -107,20 +107,20 @@ const SkillList = () => {
                                     )}
                                 </div>
                             </div>
-                            <h2 className="text-2xl font-bold text-white mb-2">{skill.title}</h2>
-                            <p className="text-[#A0A0A0] text-sm mb-8 line-clamp-3 flex-1">{skill.description}</p>
+                            <h2 className="text-2xl font-bold text-gray-800 dark:text-white mb-2">{skill.title}</h2>
+                            <p className="text-gray-500 dark:text-[#A0A0A0] text-sm mb-8 line-clamp-3 flex-1">{skill.description}</p>
                             
-                            <div className="mt-auto flex items-center justify-between border-t border-[#2A2A2A] pt-5">
+                            <div className="mt-auto flex items-center justify-between border-t border-gray-200 dark:border-[#2A2A2A] pt-5">
                                 <div className="flex items-center text-sm">
-                                    <div className="w-8 h-8 rounded-full bg-[#38bdf8] flex items-center justify-center mr-3 text-[#0E0E0E] font-bold">
+                                    <div className="w-8 h-8 rounded-full bg-[#38bdf8] flex items-center justify-center mr-3 text-white dark:text-[#0E0E0E] font-bold">
                                         {skill.ownerId?.name?.charAt(0) || 'U'}
                                     </div>
-                                    <span className="font-medium text-[#D0D0D0]">{skill.ownerId?.name || 'Unknown'}</span>
+                                    <span className="font-medium text-gray-700 dark:text-[#D0D0D0]">{skill.ownerId?.name || 'Unknown'}</span>
                                 </div>
                                 <Link to={`/skills/${skill._id}`}>
-                                    <button className="bg-[#38bdf8] text-[#0E0E0E] px-4 py-2 flex items-center justify-center rounded-full font-bold text-sm hover:bg-[#0284c7] transition-colors">
+                                    <Button variant="primary" className="w-full sm:w-auto text-sm">
                                         View Details
-                                    </button>
+                                    </Button>
                                 </Link>
                             </div>
                         </div>
@@ -130,7 +130,7 @@ const SkillList = () => {
 
             {skills.length === 0 && (
                 <div className="text-center py-12">
-                    <p className="text-[#A0A0A0] text-lg">No skills found.</p>
+                    <p className="text-slate-500 dark:text-[#A0A0A0] text-lg">No skills found.</p>
                 </div>
             )}
         </Layout>

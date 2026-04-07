@@ -166,9 +166,9 @@ const ScheduleSessionModal = ({ isOpen, onClose, request, onSchedule }) => {
                             <div className="grid grid-cols-2 gap-4">
                                 <Button
                                     type="button"
-                                    variant="secondary"
+                                    variant="outline"
                                     onClick={() => window.open('https://meet.google.com/new', '_blank')}
-                                    className="w-full py-2.5 text-sm font-medium hover:bg-slate-100 dark:hover:bg-slate-700 border border-gray-200 dark:border-slate-600"
+                                    className="w-full text-sm font-medium"
                                 >
                                     Start Meeting Now
                                 </Button>
@@ -177,7 +177,7 @@ const ScheduleSessionModal = ({ isOpen, onClose, request, onSchedule }) => {
                                     variant="secondary"
                                     onClick={handleAutoSchedule}
                                     disabled={isAutoScheduling}
-                                    className="w-full py-2.5 text-sm font-medium hover:bg-slate-100 dark:hover:bg-slate-700 border border-gray-200 dark:border-slate-600 disabled:opacity-70 disabled:cursor-not-allowed"
+                                    className="w-full text-sm font-medium disabled:opacity-70 disabled:cursor-not-allowed"
                                 >
                                     {isAutoScheduling ? 'Scheduling...' : 'Schedule Session'}
                                 </Button>
@@ -199,17 +199,17 @@ const ScheduleSessionModal = ({ isOpen, onClose, request, onSchedule }) => {
                         <div className="flex flex-col gap-3 pt-4">
                             <Button
                                 type="submit"
-                                variant="primary"
+                                variant="success"
                                 disabled={loading}
-                                className="w-full py-3 text-base font-semibold shadow-lg hover:shadow-blue-500/25 transition-all"
+                                className="w-full text-base font-semibold"
                             >
                                 {loading ? 'Scheduling Session...' : 'Confirm Schedule'}
                             </Button>
                             <Button
                                 type="button"
-                                variant="secondary"
+                                variant="outline"
                                 onClick={onClose}
-                                className="w-full py-3 text-base font-medium text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-slate-700 border-none shadow-none"
+                                className="w-full text-base border-none shadow-none"
                             >
                                 Cancel
                             </Button>

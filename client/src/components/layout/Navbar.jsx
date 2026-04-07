@@ -41,28 +41,30 @@ const Navbar = () => {
     };
 
     return (
-        <nav className="bg-[#0E0E0E] sticky top-0 z-50 border-b border-[#2A2A2A] transition-all duration-300">
+        <nav className="bg-white/80 dark:bg-[#0E0E0E]/90 backdrop-blur-md sticky top-0 z-50 border-b border-gray-200 dark:border-[#2A2A2A] transition-all duration-300">
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                 <div className="flex justify-between h-16">
                     <div className="flex items-center">
                         <Link to="/" className="flex items-center space-x-2 group">
                             <div className="bg-[#38bdf8] p-2 rounded-lg group-hover:scale-105 transition-transform duration-300">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-[#0E0E0E] w-5 h-5"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"></path><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"></path></svg>
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-white dark:text-[#0E0E0E] w-5 h-5"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"></path><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"></path></svg>
                             </div>
-                            <span className="text-xl font-bold text-white tracking-tight">
+                            <span className="text-xl font-bold text-slate-900 dark:text-white tracking-tight">
                                 SkillSwap
                             </span>
                         </Link>
                     </div>
 
                     <div className="flex items-center space-x-6">
-                        <Link to="/skills" className="text-[#A0A0A0] hover:text-white font-medium transition-colors text-sm">
+                        <Link to="/skills" className="text-slate-600 dark:text-[#A0A0A0] hover:text-slate-900 dark:hover:text-white font-medium transition-colors text-sm">
                             Browse Skills
                         </Link>
+                        
+                        <ThemeToggle />
 
                         {user ? (
                             <>
-                                <Link to="/dashboard" className="text-[#A0A0A0] hover:text-white font-medium transition-colors text-sm">
+                                <Link to="/dashboard" className="text-slate-600 dark:text-[#A0A0A0] hover:text-slate-900 dark:hover:text-white font-medium transition-colors text-sm">
                                     My Skills
                                 </Link>
                                 <div className="relative pl-4 border-l border-gray-200 dark:border-slate-700" ref={dropdownRef}>
@@ -120,10 +122,10 @@ const Navbar = () => {
                         ) : (
                             <div className="flex items-center space-x-3">
                                 <Link to="/login">
-                                    <button className="text-white border border-[#3A3A3A] hover:bg-[#1A1A1A] px-5 py-2 rounded-full font-medium transition-colors text-sm">Login</button>
+                                    <Button variant="outline" className="text-sm">Login</Button>
                                 </Link>
                                 <Link to="/register">
-                                    <button className="bg-[#38bdf8] text-[#0E0E0E] px-5 py-2 rounded-full font-bold hover:bg-[#0284c7] transition-colors text-sm">Get Started</button>
+                                    <Button variant="primary" className="text-sm">Get Started</Button>
                                 </Link>
                             </div>
                         )}

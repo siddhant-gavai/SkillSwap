@@ -41,31 +41,29 @@ const Navbar = () => {
     };
 
     return (
-        <nav className="bg-white/80 dark:bg-slate-900/80 backdrop-blur-md sticky top-0 z-50 border-b border-gray-200 dark:border-slate-800 transition-all duration-300">
+        <nav className="bg-[#0E0E0E] sticky top-0 z-50 border-b border-[#2A2A2A] transition-all duration-300">
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                 <div className="flex justify-between h-16">
                     <div className="flex items-center">
                         <Link to="/" className="flex items-center space-x-2 group">
-                            <div className="bg-gradient-to-tr from-indigo-500 to-pink-500 p-2 rounded-lg group-hover:scale-105 transition-transform duration-300 animate-float-slow shadow-lg shadow-indigo-500/30">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-white w-5 h-5"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon></svg>
+                            <div className="bg-[#38bdf8] p-2 rounded-lg group-hover:scale-105 transition-transform duration-300">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-[#0E0E0E] w-5 h-5"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"></path><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"></path></svg>
                             </div>
-                            <span className="text-2xl font-extrabold bg-clip-text text-transparent bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 dark:from-indigo-400 dark:via-purple-400 dark:to-pink-400 font-heading tracking-tight group-hover:opacity-90 transition-opacity">
+                            <span className="text-xl font-bold text-white tracking-tight">
                                 SkillSwap
                             </span>
                         </Link>
                     </div>
 
                     <div className="flex items-center space-x-6">
-                        <ThemeToggle />
-
-                        <Link to="/skills" className="text-slate-600 dark:text-slate-300 hover:text-blue-600 dark:hover:text-blue-400 font-medium transition-colors">
+                        <Link to="/skills" className="text-[#A0A0A0] hover:text-white font-medium transition-colors text-sm">
                             Browse Skills
                         </Link>
 
                         {user ? (
                             <>
-                                <Link to="/dashboard" className="text-slate-600 dark:text-slate-300 hover:text-blue-600 dark:hover:text-blue-400 font-medium transition-colors">
-                                    Dashboard
+                                <Link to="/dashboard" className="text-[#A0A0A0] hover:text-white font-medium transition-colors text-sm">
+                                    My Skills
                                 </Link>
                                 <div className="relative pl-4 border-l border-gray-200 dark:border-slate-700" ref={dropdownRef}>
                                     <button 
@@ -122,10 +120,10 @@ const Navbar = () => {
                         ) : (
                             <div className="flex items-center space-x-3">
                                 <Link to="/login">
-                                    <Button variant="secondary" className="px-5">Login</Button>
+                                    <button className="text-white border border-[#3A3A3A] hover:bg-[#1A1A1A] px-5 py-2 rounded-full font-medium transition-colors text-sm">Login</button>
                                 </Link>
                                 <Link to="/register">
-                                    <Button variant="primary" className="px-6 shadow-lg shadow-blue-500/20">Get Started</Button>
+                                    <button className="bg-[#38bdf8] text-[#0E0E0E] px-5 py-2 rounded-full font-bold hover:bg-[#0284c7] transition-colors text-sm">Get Started</button>
                                 </Link>
                             </div>
                         )}

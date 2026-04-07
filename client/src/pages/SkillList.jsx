@@ -51,12 +51,23 @@ const SkillList = () => {
 
     return (
         <Layout>
-            <div className="mb-8 flex justify-between items-center">
-                <div>
-                    <h1 className="text-3xl font-bold text-gray-900 dark:text-white">Explore Skills</h1>
-                    <p className="text-gray-600 dark:text-gray-400 mt-2">Find the perfect skill to learn today.</p>
+            <div className="mb-10">
+                <h1 className="text-5xl font-extrabold text-white mb-3">Explore Skills</h1>
+                <p className="text-[#A0A0A0] text-lg mb-8">Find the perfect skill to begin today</p>
+                
+                <div className="relative max-w-2xl">
+                    <div className="absolute inset-y-0 left-0 pl-5 flex items-center pointer-events-none">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-[#6A6A6A]">
+                            <circle cx="11" cy="11" r="8"></circle>
+                            <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+                        </svg>
+                    </div>
+                    <input 
+                        type="text" 
+                        placeholder="Search skills..." 
+                        className="w-full bg-[#15151A] text-white border border-[#2A2A2A] rounded-2xl py-4 pl-12 pr-4 focus:outline-none focus:border-[#38bdf8] transition-colors shadow-sm"
+                    />
                 </div>
-                {/* Search/Filter could go here */}
             </div>
 
             {actionMessage && (
@@ -70,67 +81,56 @@ const SkillList = () => {
             )}
 
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-                {skills.map(skill => (
-                    <div key={skill._id} className="relative bg-white/40 dark:bg-slate-800/40 backdrop-blur-xl rounded-2xl shadow-xl hover:shadow-2xl hover:-translate-y-2 transition-all duration-300 overflow-hidden flex flex-col group border border-white/20 dark:border-slate-700/30">
-                        <div className="absolute inset-0 bg-gradient-to-br from-blue-500/5 to-purple-500/5 dark:from-blue-500/10 dark:to-purple-500/10 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
-                        <GlowingEffect
-                            spread={60}
-                            glow={true}
-                            disabled={false}
-                            proximity={100}
-                            inactiveZone={0.01}
-                            borderWidth={3}
+                {skills.map(skill => {
+                    const isTech = skill.category?.toLowerCase() === 'tech';
+                    const badgeClass = isTech 
+                        ? 'bg-[#38bdf8]/10 text-[#38bdf8] border-[#38bdf8]/30'
+                        : 'bg-[#9D72FF]/10 text-[#9D72FF] border-[#9D72FF]/30';
 
-                        />
-                        <div className="relative z-10 flex flex-col h-full">
-                            <div className="p-6 flex-1">
-                                <div className="flex justify-between items-start mb-4">
-                                    <span className="inline-block bg-gradient-to-r from-blue-500 to-indigo-600 text-white text-[10px] font-bold px-3 py-1 rounded-full uppercase tracking-widest shadow-lg shadow-blue-500/30">
-                                        {skill.category}
-                                    </span>
-                                    <div className="flex gap-2 items-center">
-                                        <span className="text-slate-500 dark:text-slate-400 text-xs font-medium tracking-wide border border-slate-200 dark:border-slate-700 px-2 py-1 rounded-md">{skill.level}</span>
-                                        {user && (skill.ownerId?._id === user._id || user.role === 'admin') && (
-                                            <div className="flex items-center gap-2">
-                                                {user.role === 'admin' && skill.ownerId?._id !== user._id && (
-                                                    <span className="bg-red-100 text-red-800 text-[10px] font-bold px-2 py-0.5 rounded-full uppercase">Admin</span>
-                                                )}
-                                                <button
-                                                    onClick={() => handleDeleteSkill(skill._id)}
-                                                    disabled={deletingSkillId === skill._id}
-                                                    className="text-red-500 hover:text-red-700 hover:bg-red-50 dark:hover:bg-red-900/30 p-1 rounded transition-colors disabled:opacity-50"
-                                                    title="Delete Skill"
-                                                >
-                                                    <Trash2 size={16} />
-                                                </button>
-                                            </div>
-                                        )}
-                                    </div>
-                                </div>
-                                <h2 className="text-2xl font-bold text-slate-900 dark:text-white mb-3 font-heading leading-tight group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors">{skill.title}</h2>
-                                <p className="text-slate-600 dark:text-slate-300 text-sm mb-6 line-clamp-3 leading-relaxed">{skill.description}</p>
-                                <div className="flex items-center text-sm text-slate-500 dark:text-slate-400 mt-auto">
-                                    <div className="w-10 h-10 rounded-full bg-gradient-to-br from-slate-200 to-slate-300 dark:from-slate-700 dark:to-slate-600 flex items-center justify-center mr-3 ring-2 ring-white dark:ring-slate-800 shadow-md">
-                                        <span className="font-bold text-slate-700 dark:text-slate-200">{skill.ownerId?.name?.charAt(0) || 'U'}</span>
-                                    </div>
-                                    <span className="font-medium">{skill.ownerId?.name}</span>
+                    return (
+                        <div key={skill._id} className="bg-[#13131A] rounded-2xl border border-[#2A2A2A] overflow-hidden flex flex-col hover:border-[#3A3A3A] transition-colors p-6">
+                            <div className="flex justify-between items-start mb-4">
+                                <span className={`border text-[10px] uppercase font-bold px-3 py-1 rounded-full ${badgeClass}`}>
+                                    {skill.category}
+                                </span>
+                                <div className="flex gap-2 items-center">
+                                    <span className="text-[#A0A0A0] text-xs font-medium">{skill.level || 'Any level'}</span>
+                                    {user && (skill.ownerId?._id === user._id || user.role === 'admin') && (
+                                        <button
+                                            onClick={() => handleDeleteSkill(skill._id)}
+                                            disabled={deletingSkillId === skill._id}
+                                            className="text-red-500 hover:text-red-400 ml-2 disabled:opacity-50"
+                                            title="Delete Skill"
+                                        >
+                                            <Trash2 size={16} />
+                                        </button>
+                                    )}
                                 </div>
                             </div>
-                            <div className="bg-white/50 dark:bg-slate-900/30 px-6 py-4 border-t border-white/20 dark:border-slate-700/50 backdrop-blur-sm">
-                                <Link to={`/skills/${skill._id}`} className="block">
-                                    <Button variant="secondary" className="w-full text-sm font-bold tracking-wide py-3 hover:bg-white dark:hover:bg-slate-700 transition-colors">
+                            <h2 className="text-2xl font-bold text-white mb-2">{skill.title}</h2>
+                            <p className="text-[#A0A0A0] text-sm mb-8 line-clamp-3 flex-1">{skill.description}</p>
+                            
+                            <div className="mt-auto flex items-center justify-between border-t border-[#2A2A2A] pt-5">
+                                <div className="flex items-center text-sm">
+                                    <div className="w-8 h-8 rounded-full bg-[#38bdf8] flex items-center justify-center mr-3 text-[#0E0E0E] font-bold">
+                                        {skill.ownerId?.name?.charAt(0) || 'U'}
+                                    </div>
+                                    <span className="font-medium text-[#D0D0D0]">{skill.ownerId?.name || 'Unknown'}</span>
+                                </div>
+                                <Link to={`/skills/${skill._id}`}>
+                                    <button className="bg-[#38bdf8] text-[#0E0E0E] px-4 py-2 flex items-center justify-center rounded-full font-bold text-sm hover:bg-[#0284c7] transition-colors">
                                         View Details
-                                    </Button>
+                                    </button>
                                 </Link>
                             </div>
                         </div>
-                    </div>
-                ))}
+                    );
+                })}
             </div>
 
             {skills.length === 0 && (
                 <div className="text-center py-12">
-                    <p className="text-gray-500 text-lg">No skills found.</p>
+                    <p className="text-[#A0A0A0] text-lg">No skills found.</p>
                 </div>
             )}
         </Layout>

@@ -68,3 +68,7 @@ SkillSwap is a peer-to-peer skill exchange platform where users can trade skills
 - AI-based skill recommendations.
 - Real-time chat for accepted exchanges.
 - In-app video calls (WebRTC).
+
+## License
+
+This project is licensed under the MIT License.

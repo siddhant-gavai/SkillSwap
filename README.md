@@ -1,5 +1,7 @@
 # SkillSwap
 
+**Status: Active**
+
 SkillSwap is a peer-to-peer skill exchange platform where users can trade skills instead of money. Built with the MERN stack (MongoDB, Express, React, Node.js).
 
 ## Features

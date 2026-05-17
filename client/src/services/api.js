@@ -1,4 +1,4 @@
-import axios from 'axios';
+import axios from 'axios'; // Import axios for API requests
 
 const api = axios.create({
     baseURL: 'https://skillswap-l8ii.onrender.com/api',

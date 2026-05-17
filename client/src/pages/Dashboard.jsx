@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react'; // Import React and hooks
 import Layout from '../components/layout/Layout';
 import GlowingEffect from '../components/ui/GlowingEffect';
 import { useAuth } from '../context/AuthContext';

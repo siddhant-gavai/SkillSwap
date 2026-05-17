@@ -1,4 +1,4 @@
-import React from 'react';
+import React from 'react'; // Home page component
 import { Link } from 'react-router-dom';
 import { ArrowRight, Repeat, Users, Star } from 'lucide-react';
 

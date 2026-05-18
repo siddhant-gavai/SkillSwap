@@ -16,7 +16,7 @@ const Navbar = () => {
         <nav className="bg-white shadow-md">
             <div className="container mx-auto px-4">
                 <div className="flex justify-between items-center h-16">
-                    <Link to="/" className="text-2xl font-bold text-indigo-600">SkillSwap</Link>
+                    <Link to="/" className="text-2xl font-bold text-indigo-600 hover:text-indigo-700 transition-colors">SkillSwap</Link>
 
                     <div className="hidden md:flex items-center space-x-8">
                         <Link to="/skills" className="text-gray-600 hover:text-indigo-600">Browse Skills</Link>

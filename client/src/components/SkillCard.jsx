@@ -10,7 +10,7 @@ const SkillCard = ({ skill }) => {
                     <span className="bg-indigo-50 text-indigo-700 text-xs font-semibold px-2 py-1 rounded-full hover:bg-indigo-100 transition-colors">{skill.category}</span>
                     <span className="text-xs text-gray-500">{skill.level}</span>
                 </div>
-                <h3 className="text-xl font-bold text-gray-900 mb-2 line-clamp-1">{skill.title}</h3>
+                <h3 className="text-xl font-bold text-gray-900 mb-2 line-clamp-1 hover:text-indigo-600 transition-colors cursor-pointer">{skill.title}</h3>
                 <p className="text-gray-600 text-sm mb-4 line-clamp-3">{skill.description}</p>
 
                 <div className="flex items-center mt-auto pt-4 border-t border-gray-50">

@@ -7,7 +7,7 @@ const SkillCard = ({ skill }) => {
         <div className="bg-white/90 dark:bg-slate-800/90 backdrop-blur-sm rounded-xl shadow-sm hover:shadow-[0_20px_40px_rgba(0,200,255,0.08)] transition-all duration-300 transform hover:-translate-y-1 border border-gray-100 dark:border-slate-700 overflow-hidden flex flex-col h-full relative z-10">
             <div className="p-6 flex-grow">
                 <div className="flex justify-between items-start mb-4">
-                    <span className="bg-indigo-50 text-indigo-700 text-xs font-semibold px-2 py-1 rounded-full">{skill.category}</span>
+                    <span className="bg-indigo-50 text-indigo-700 text-xs font-semibold px-2 py-1 rounded-full hover:bg-indigo-100 transition-colors">{skill.category}</span>
                     <span className="text-xs text-gray-500">{skill.level}</span>
                 </div>
                 <h3 className="text-xl font-bold text-gray-900 mb-2 line-clamp-1">{skill.title}</h3>

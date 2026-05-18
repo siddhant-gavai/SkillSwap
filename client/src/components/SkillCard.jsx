@@ -22,7 +22,7 @@ const SkillCard = ({ skill }) => {
                         )}
                     </div>
                     <div className="flex-1 min-w-0">
-                        <p className="text-sm font-medium text-gray-900 truncate">{skill.ownerId?.name || 'Unknown User'}</p>
+                        <p className="text-sm font-medium text-gray-900 truncate">{skill.ownerId?.name || 'Anonymous User'}</p>
                         <div className="flex items-center text-xs text-yellow-500">
                             <Star size={12} fill="currentColor" className="mr-1" />
                             <span>{skill.ownerId?.rating?.toFixed(1) || 'N/A'}</span>

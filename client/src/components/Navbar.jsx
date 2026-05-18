@@ -19,7 +19,7 @@ const Navbar = () => {
                     <Link to="/" className="text-2xl font-bold text-indigo-600 hover:text-indigo-700 transition-colors">SkillSwap</Link>
 
                     <div className="hidden md:flex items-center space-x-8">
-                        <Link to="/skills" className="text-gray-600 hover:text-indigo-600">Browse Skills</Link>
+                        <Link to="/skills" className="text-gray-600 hover:text-indigo-600 transition-colors">Browse Skills</Link>
                         {user ? (
                             <>
                                 <Link to="/dashboard" className="text-gray-600 hover:text-indigo-600">Dashboard</Link>

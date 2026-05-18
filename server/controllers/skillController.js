@@ -5,6 +5,7 @@ const { ApiResponse, ApiError, asyncHandler } = require('../utils/apiResponse');
 // @route   GET /api/skills
 // @access  Public
 exports.getSkills = asyncHandler(async (req, res) => {
+    // Fetch all skills with owner details populated
     const skills = await Skill.find().populate('ownerId', 'name email');
     res.status(200).json(new ApiResponse(200, skills, "Skills fetched successfully"));
 });

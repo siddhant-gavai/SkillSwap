@@ -10,7 +10,7 @@ connectDB();
 
 const app = express();
 
-// Middleware
+// Application Middleware
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());

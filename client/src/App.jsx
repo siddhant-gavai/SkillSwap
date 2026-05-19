@@ -28,7 +28,7 @@ const ProtectedRoute = ({ children }) => {
     return children;
 };
 
-// Public Route (redirect to dashboard if logged in)
+// Public Route Wrapper (redirect to dashboard if logged in)
 const PublicRoute = ({ children }) => {
     const { user, loading } = useAuth();
 

@@ -13,7 +13,7 @@ import AddSkill from './pages/AddSkill';
 import GlowingEffectDemo from './components/demos/GlowingEffectDemo';
 import BackgroundPathsDemo from './components/demos/BackgroundPathsDemo';
 
-// Protected Route Component
+// Protected Route Wrapper Component
 const ProtectedRoute = ({ children }) => {
     const { user, loading } = useAuth();
 

@@ -22,7 +22,7 @@ app.use('/api/skills', require('./routes/skillRoutes'));
 app.use('/api/requests', require('./routes/requestRoutes'));
 app.use('/api/ai', require('./routes/aiRoutes'));
 
-// Error Handler
+// Global Error Handler Setup
 app.use(errorHandler);
 
 const PORT = process.env.PORT || 5001;

@@ -1,7 +1,6 @@
 import React from 'react';
 import Navbar from './Navbar';
 
-import { BackgroundPaths } from '../ui/BackgroundPaths';
 
 const Layout = ({ children }) => {
     return (

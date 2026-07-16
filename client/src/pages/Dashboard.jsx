@@ -90,7 +90,32 @@ const Dashboard = () => {
         .sort((a, b) => new Date(a.scheduledDate) - new Date(b.scheduledDate));
 
     if (loading) {
-        return <Layout><div className="text-center py-10">Loading...</div></Layout>;
+        return (
+            <Layout>
+                <div className="mb-8 animate-pulse">
+                    <div className="h-9 w-64 bg-slate-200 dark:bg-slate-800 rounded-lg mb-2"></div>
+                    <div className="h-4 w-96 bg-slate-200 dark:bg-slate-800 rounded-lg"></div>
+                </div>
+                <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 animate-pulse">
+                    <div className="bg-white dark:bg-[#13131A] p-8 rounded-xl border border-gray-200 dark:border-[#2A2A2A] h-[400px] space-y-4">
+                        <div className="h-6 w-48 bg-slate-200 dark:bg-slate-800 rounded-lg mb-6"></div>
+                        <div className="h-12 bg-slate-200 dark:bg-slate-800 rounded-xl"></div>
+                        <div className="h-12 bg-slate-200 dark:bg-slate-800 rounded-xl"></div>
+                        <div className="h-12 bg-slate-200 dark:bg-slate-800 rounded-xl"></div>
+                    </div>
+                    <div className="space-y-8">
+                        <div className="bg-white dark:bg-[#13131A] p-8 rounded-xl border border-gray-200 dark:border-[#2A2A2A] h-[200px] space-y-4">
+                            <div className="h-6 w-48 bg-slate-200 dark:bg-slate-800 rounded-lg mb-6"></div>
+                            <div className="h-12 bg-slate-200 dark:bg-slate-800 rounded-xl"></div>
+                        </div>
+                        <div className="bg-white dark:bg-[#13131A] p-8 rounded-xl border border-gray-200 dark:border-[#2A2A2A] h-[200px] space-y-4">
+                            <div className="h-6 w-48 bg-slate-200 dark:bg-slate-800 rounded-lg mb-6"></div>
+                            <div className="h-12 bg-slate-200 dark:bg-slate-800 rounded-xl"></div>
+                        </div>
+                    </div>
+                </div>
+            </Layout>
+        );
     }
 
     return (

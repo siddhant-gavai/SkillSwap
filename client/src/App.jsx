@@ -1,22 +1,37 @@
-import React from 'react'; // Core React import
+import React, { lazy, Suspense } from 'react';
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import { AuthProvider, useAuth } from './context/AuthContext';
 import { ThemeProvider } from './context/ThemeContext';
 
-// Application Pages Import
-import Login from './pages/Login';
-import Register from './pages/Register';
-import Dashboard from './pages/Dashboard';
-import SkillList from './pages/SkillList';
-import SkillDetail from './pages/SkillDetail';
-import AddSkill from './pages/AddSkill';
+// Skeleton Loader for lazy loaded routes
+const PageSkeleton = () => (
+    <div className="max-w-7xl mx-auto px-4 py-8 space-y-6 animate-pulse">
+        <div className="h-8 w-1/3 bg-slate-200 dark:bg-slate-800 rounded-lg"></div>
+        <div className="h-4 w-1/2 bg-slate-200 dark:bg-slate-800 rounded-lg"></div>
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 pt-6">
+            <div className="h-48 bg-slate-200 dark:bg-slate-800 rounded-xl"></div>
+            <div className="h-48 bg-slate-200 dark:bg-slate-800 rounded-xl"></div>
+            <div className="h-48 bg-slate-200 dark:bg-slate-800 rounded-xl"></div>
+        </div>
+    </div>
+);
+
+// Application Pages Lazy Loaded
+const Home = lazy(() => import('./pages/Home'));
+const Login = lazy(() => import('./pages/Login'));
+const Register = lazy(() => import('./pages/Register'));
+const Dashboard = lazy(() => import('./pages/Dashboard'));
+const SkillList = lazy(() => import('./pages/SkillList'));
+const SkillDetail = lazy(() => import('./pages/SkillDetail'));
+const AddSkill = lazy(() => import('./pages/AddSkill'));
+const Profile = lazy(() => import('./pages/Profile'));
 
 // Protected Route Wrapper Component
 const ProtectedRoute = ({ children }) => {
     const { user, loading } = useAuth();
 
     if (loading) {
-        return <div className="text-center py-20">Loading...</div>;
+        return <PageSkeleton />;
     }
 
     if (!user) {
@@ -31,7 +46,7 @@ const PublicRoute = ({ children }) => {
     const { user, loading } = useAuth();
 
     if (loading) {
-        return <div className="text-center py-20">Loading...</div>;
+        return <PageSkeleton />;
     }
 
     if (user) {
@@ -43,37 +58,40 @@ const PublicRoute = ({ children }) => {
 
 const AppRoutes = () => {
     return (
-        <Routes>
-            {/* Public Routes */}
-            <Route path="/" element={<Navigate to="/skills" replace />} />
-            <Route path="/login" element={
-                <PublicRoute>
-                    <Login />
-                </PublicRoute>
-            } />
-            <Route path="/register" element={
-                <PublicRoute>
-                    <Register />
-                </PublicRoute>
-            } />
-            <Route path="/skills" element={<SkillList />} />
-            <Route path="/skills/:id" element={<SkillDetail />} />
+        <Suspense fallback={<PageSkeleton />}>
+            <Routes>
+                {/* Public Routes */}
+                <Route path="/" element={<Home />} />
+                <Route path="/login" element={
+                    <PublicRoute>
+                        <Login />
+                    </PublicRoute>
+                } />
+                <Route path="/register" element={
+                    <PublicRoute>
+                        <Register />
+                    </PublicRoute>
+                } />
+                <Route path="/skills" element={<SkillList />} />
+                <Route path="/skills/:id" element={<SkillDetail />} />
+                <Route path="/profile/:id" element={<Profile />} />
 
-            {/* Protected Routes */}
-            <Route path="/dashboard" element={
-                <ProtectedRoute>
-                    <Dashboard />
-                </ProtectedRoute>
-            } />
-            <Route path="/skills/new" element={
-                <ProtectedRoute>
-                    <AddSkill />
-                </ProtectedRoute>
-            } />
+                {/* Protected Routes */}
+                <Route path="/dashboard" element={
+                    <ProtectedRoute>
+                        <Dashboard />
+                    </ProtectedRoute>
+                } />
+                <Route path="/skills/new" element={
+                    <ProtectedRoute>
+                        <AddSkill />
+                    </ProtectedRoute>
+                } />
 
-            {/* 404 - Redirect to home */}
-            <Route path="*" element={<Navigate to="/" replace />} />
-        </Routes>
+                {/* 404 - Redirect to home */}
+                <Route path="*" element={<Navigate to="/" replace />} />
+            </Routes>
+        </Suspense>
     );
 };
 

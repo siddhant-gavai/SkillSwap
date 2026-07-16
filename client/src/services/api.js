@@ -2,6 +2,7 @@ import axios from 'axios'; // Import axios for API requests
 
 const api = axios.create({
     baseURL: 'https://skillswap-l8ii.onrender.com/api',
+    timeout: 8000,
     headers: {
         'Content-Type': 'application/json',
     },

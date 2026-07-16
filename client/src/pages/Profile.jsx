@@ -1,13 +1,13 @@
 import React, { useState, useEffect, useContext } from 'react';
 import { useParams } from 'react-router-dom';
-import axios from '../api/axios';
-import AuthContext from '../context/AuthContext';
+import axios from '../services/api';
+import { useAuth } from '../context/AuthContext';
 import SkillCard from '../components/SkillCard';
 import { User, Star, MapPin, Calendar } from 'lucide-react';
 
 const Profile = () => {
     const { id } = useParams();
-    const { user: currentUser } = useContext(AuthContext);
+    const { user: currentUser } = useAuth();
     const [profile, setProfile] = useState(null);
     const [skills, setSkills] = useState([]);
     const [loading, setLoading] = useState(true);
@@ -36,7 +36,30 @@ const Profile = () => {
         if (id) fetchProfile();
     }, [id]);
 
-    if (loading) return <div>Loading...</div>;
+    if (loading) {
+        return (
+            <div className="max-w-4xl mx-auto animate-pulse">
+                <div className="bg-white dark:bg-slate-800 rounded-2xl p-8 mb-8 flex flex-col md:flex-row items-center gap-8 border border-gray-100 dark:border-slate-700">
+                    <div className="w-32 h-32 bg-slate-200 dark:bg-slate-700 rounded-full"></div>
+                    <div className="flex-grow space-y-4 text-center md:text-left">
+                        <div className="h-8 w-48 bg-slate-200 dark:bg-slate-700 rounded-lg mx-auto md:mx-0"></div>
+                        <div className="h-4 w-96 bg-slate-200 dark:bg-slate-700 rounded-lg mx-auto md:mx-0"></div>
+                        <div className="flex justify-center md:justify-start gap-6 pt-4">
+                            <div className="h-4 w-24 bg-slate-200 dark:bg-slate-700 rounded-lg"></div>
+                            <div className="h-4 w-24 bg-slate-200 dark:bg-slate-700 rounded-lg"></div>
+                        </div>
+                    </div>
+                </div>
+                <div className="mb-8">
+                    <div className="h-6 w-36 bg-slate-200 dark:bg-slate-700 rounded-lg mb-6"></div>
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div className="h-48 bg-slate-200 dark:bg-slate-700 rounded-xl"></div>
+                        <div className="h-48 bg-slate-200 dark:bg-slate-700 rounded-xl"></div>
+                    </div>
+                </div>
+            </div>
+        );
+    }
     if (!profile) return <div>User not found</div>;
 
     return (

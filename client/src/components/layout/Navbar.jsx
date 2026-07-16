@@ -41,12 +41,12 @@ const Navbar = () => {
     };
 
     return (
-        <nav className="bg-white/80 dark:bg-[#0E0E0E]/90 backdrop-blur-md sticky top-0 z-50 border-b border-gray-200 dark:border-[#2A2A2A] transition-all duration-300">
+        <nav className="bg-white dark:bg-[#0E0E0E] sticky top-0 z-50 border-b border-gray-200 dark:border-[#2A2A2A]">
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                 <div className="flex justify-between h-16">
                     <div className="flex items-center">
                         <Link to="/" className="flex items-center space-x-2 group">
-                            <div className="bg-[#38bdf8] p-2 rounded-lg group-hover:scale-105 transition-transform duration-300">
+                            <div className="bg-[#38bdf8] p-2 rounded-lg">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-white dark:text-[#0E0E0E] w-5 h-5"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"></path><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"></path></svg>
                             </div>
                             <span className="text-xl font-bold text-slate-900 dark:text-white tracking-tight">
@@ -72,7 +72,7 @@ const Navbar = () => {
                                         onClick={() => setDropdownOpen(!dropdownOpen)}
                                         className="flex items-center space-x-2 focus:outline-none"
                                     >
-                                        <div className="w-8 h-8 rounded-full bg-gradient-to-tr from-indigo-500 to-pink-500 flex items-center justify-center text-white font-bold shadow-md">
+                                        <div className="w-8 h-8 rounded-full bg-blue-600 flex items-center justify-center text-white font-bold">
                                             {user.name.charAt(0).toUpperCase()}
                                         </div>
                                         <span className="text-sm font-semibold text-slate-800 dark:text-slate-200 hover:text-indigo-500 dark:hover:text-indigo-400 transition-colors">
@@ -80,7 +80,7 @@ const Navbar = () => {
                                         </span>
                                     </button>
 
-                                    <div className={`absolute right-0 mt-3 w-48 bg-white dark:bg-slate-800 rounded-xl shadow-xl border border-gray-100 dark:border-slate-700 py-2 z-50 transform origin-top-right transition-all duration-200 ${dropdownOpen ? 'opacity-100 scale-100 visible pointer-events-auto' : 'opacity-0 scale-95 invisible pointer-events-none'}`}>
+                                    <div className={`absolute right-0 mt-3 w-48 bg-white dark:bg-slate-800 rounded-xl shadow-lg border border-gray-100 dark:border-slate-700 py-2 z-50 ${dropdownOpen ? 'block' : 'hidden'}`}>
                                         <div className="px-4 py-3 border-b border-gray-100 dark:border-slate-700 mb-1">
                                             <p className="text-xs text-slate-500 dark:text-slate-400">Signed in as</p>
                                             <p className="text-sm font-bold text-slate-800 dark:text-white truncate">{user.name}</p>

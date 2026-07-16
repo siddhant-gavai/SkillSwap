@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react';
 import Layout from '../components/layout/Layout';
-import GlowingEffect from '../components/ui/GlowingEffect';
 import api from '../services/api';
 import { Link } from 'react-router-dom';
 import Button from '../components/common/Button';

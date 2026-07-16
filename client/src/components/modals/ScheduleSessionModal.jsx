@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import Button from '../common/Button';
 import Input from '../common/Input';
 import { X } from 'lucide-react';
-import GlowingEffect from '../ui/GlowingEffect';
 
 const ScheduleSessionModal = ({ isOpen, onClose, request, onSchedule }) => {
     const [formData, setFormData] = useState({
@@ -77,14 +76,6 @@ const ScheduleSessionModal = ({ isOpen, onClose, request, onSchedule }) => {
     return (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50 backdrop-blur-sm p-4">
             <div className="relative w-full max-w-xl bg-white dark:bg-slate-800 rounded-xl shadow-2xl overflow-hidden transform transition-all">
-                <GlowingEffect
-                    spread={40}
-                    glow={true}
-                    disabled={false}
-                    proximity={64}
-                    inactiveZone={0.01}
-                    borderWidth={2}
-                />
 
                 <div className="relative z-10 p-8">
                     <div className="flex justify-between items-center mb-8">

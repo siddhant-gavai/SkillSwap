@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react'; // Import React and hooks
 import Layout from '../components/layout/Layout';
-import GlowingEffect from '../components/ui/GlowingEffect';
 import { useAuth } from '../context/AuthContext';
 import api from '../services/api';
 import Button from '../components/common/Button';
@@ -105,14 +104,6 @@ const Dashboard = () => {
             {upcomingSessions.length > 0 && (
                 <div className="mb-10 relative bg-white dark:bg-[#13131A] p-8 rounded-xl shadow-sm hover:shadow-md border border-gray-200 dark:border-[#2A2A2A] overflow-hidden group transition-all">
                     <div className="absolute inset-0 bg-gradient-to-br from-purple-500/5 to-blue-500/5 dark:from-purple-500/10 dark:to-blue-500/10 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
-                    <GlowingEffect
-                        spread={60}
-                        glow={true}
-                        disabled={false}
-                        proximity={100}
-                        inactiveZone={0.01}
-                        borderWidth={3}
-                    />
                     <div className="relative z-10">
                         <h2 className="text-2xl font-bold mb-6 text-transparent bg-clip-text bg-gradient-to-r from-purple-600 to-blue-600 dark:from-purple-400 dark:to-blue-400 flex items-center font-heading">
                             <Calendar className="mr-3" size={28} /> Upcoming Sessions
@@ -153,14 +144,6 @@ const Dashboard = () => {
                 {/* My Skills Section */}
                 <div className="relative bg-white dark:bg-[#13131A] p-8 rounded-xl shadow-sm hover:shadow-md border border-gray-200 dark:border-[#2A2A2A] transition-all duration-300 group">
                     <div className="absolute inset-0 bg-gradient-to-br from-blue-500/5 to-cyan-500/5 dark:from-blue-500/10 dark:to-cyan-500/10 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
-                    <GlowingEffect
-                        spread={60}
-                        glow={true}
-                        disabled={false}
-                        proximity={100}
-                        inactiveZone={0.01}
-                        borderWidth={3}
-                    />
                     <div className="relative z-10">
                         <div className="flex justify-between items-end mb-6">
                             <h2 className="text-2xl font-bold font-heading text-slate-800 dark:text-slate-100 border-l-4 border-blue-500 pl-3">My Skills Offered</h2>
@@ -213,14 +196,6 @@ const Dashboard = () => {
                 <div className="space-y-8">
                     {/* Received Requests */}
                     <div className="relative bg-white dark:bg-[#13131A] p-8 rounded-xl shadow-sm hover:shadow-md border border-gray-200 dark:border-[#2A2A2A] transition-all duration-300">
-                        <GlowingEffect
-                            spread={60}
-                            glow={true}
-                            disabled={false}
-                            proximity={100}
-                            inactiveZone={0.01}
-                            borderWidth={3}
-                        />
                         <div className="relative z-10">
                             <h2 className="text-2xl font-bold font-heading mb-6 border-l-4 border-green-500 pl-3 text-slate-800 dark:text-slate-100">Requests Received</h2>
                             {receivedRequests.length === 0 ? (
@@ -264,14 +239,6 @@ const Dashboard = () => {
 
                     {/* Sent Requests */}
                     <div className="relative bg-white dark:bg-[#13131A] p-8 rounded-xl shadow-sm hover:shadow-md border border-gray-200 dark:border-[#2A2A2A] transition-all duration-300">
-                        <GlowingEffect
-                            spread={60}
-                            glow={true}
-                            disabled={false}
-                            proximity={100}
-                            inactiveZone={0.01}
-                            borderWidth={3}
-                        />
                         <div className="relative z-10">
                             <h2 className="text-2xl font-bold font-heading mb-6 border-l-4 border-blue-500 pl-3 text-slate-800 dark:text-slate-100">Requests Sent</h2>
                             {sentRequests.length === 0 ? (

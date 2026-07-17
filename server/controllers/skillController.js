@@ -1,12 +1,30 @@
 const Skill = require('../models/Skill');
 const { ApiResponse, ApiError, asyncHandler } = require('../utils/apiResponse');
 
-// @desc    Get all skills
+// @desc    Get all skills (supports searching and filtering)
 // @route   GET /api/skills
 // @access  Public
 exports.getSkills = asyncHandler(async (req, res) => {
-    // Fetch all skills with owner details populated
-    const skills = await Skill.find().populate('ownerId', 'name email');
+    const { search, category, level } = req.query;
+    
+    let query = {};
+    
+    if (category && category !== 'All') {
+        query.category = { $regex: new RegExp(`^${category}$`, 'i') };
+    }
+    
+    if (level && level !== 'All') {
+        query.level = { $regex: new RegExp(`^${level}$`, 'i') };
+    }
+    
+    if (search) {
+        query.$or = [
+            { title: { $regex: search, $options: 'i' } },
+            { description: { $regex: search, $options: 'i' } }
+        ];
+    }
+
+    const skills = await Skill.find(query).populate('ownerId', 'name email');
     res.status(200).json(new ApiResponse(200, skills, "Skills fetched successfully"));
 });
 

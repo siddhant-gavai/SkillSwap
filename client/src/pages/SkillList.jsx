@@ -15,6 +15,7 @@ const SkillList = () => {
     const [deletingSkillId, setDeletingSkillId] = useState(null);
     const [actionMessage, setActionMessage] = useState(null);
     const [searchTerm, setSearchTerm] = useState('');
+    const [selectedCategory, setSelectedCategory] = useState('All');
     const debouncedSearch = useDebounce(searchTerm, 400);
 
     const handleDeleteSkill = async (skillId) => {
@@ -39,7 +40,10 @@ const SkillList = () => {
         const fetchSkills = async () => {
             try {
                 const { data } = await api.get('/skills', {
-                    params: { search: debouncedSearch }
+                    params: { 
+                        search: debouncedSearch,
+                        category: selectedCategory === 'All' ? undefined : selectedCategory
+                    }
                 });
                 setSkills(data.data);
             } catch (error) {
@@ -49,7 +53,7 @@ const SkillList = () => {
             }
         };
         fetchSkills();
-    }, [debouncedSearch]);
+    }, [debouncedSearch, selectedCategory]);
 
     if (loading) {
         return (
@@ -106,6 +110,22 @@ const SkillList = () => {
                         placeholder="Search skills..." 
                         className="w-full bg-white dark:bg-[#15151A] text-gray-800 dark:text-white border border-gray-200 dark:border-[#2A2A2A] rounded-2xl py-4 pl-12 pr-4 focus:outline-none focus:border-[#38bdf8] transition-colors shadow-sm"
                     />
+                </div>
+
+                <div className="flex flex-wrap gap-2 mt-6">
+                    {['All', 'Tech', 'Language', 'Music', 'Art', 'Fitness', 'Cooking', 'Other'].map(cat => (
+                        <button
+                            key={cat}
+                            onClick={() => setSelectedCategory(cat)}
+                            className={`px-4 py-2 rounded-full text-sm font-semibold transition-all border ${
+                                selectedCategory === cat
+                                    ? 'bg-[#38bdf8] border-[#38bdf8] text-white dark:text-[#0E0E0E]'
+                                    : 'bg-transparent border-gray-200 dark:border-[#2A2A2A] text-gray-600 dark:text-[#A0A0A0] hover:border-gray-400 dark:hover:border-[#4A4A4A]'
+                            }`}
+                        >
+                            {cat}
+                        </button>
+                    ))}
                 </div>
             </div>
 

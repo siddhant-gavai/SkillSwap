@@ -5,6 +5,7 @@ import { Link } from 'react-router-dom';
 import Button from '../components/common/Button';
 import { useAuth } from '../context/AuthContext';
 import { Trash2 } from 'lucide-react';
+import { useDebounce } from '../hooks/useDebounce';
 
 
 const SkillList = () => {
@@ -13,6 +14,8 @@ const SkillList = () => {
     const [loading, setLoading] = useState(true);
     const [deletingSkillId, setDeletingSkillId] = useState(null);
     const [actionMessage, setActionMessage] = useState(null);
+    const [searchTerm, setSearchTerm] = useState('');
+    const debouncedSearch = useDebounce(searchTerm, 400);
 
     const handleDeleteSkill = async (skillId) => {
         if (!window.confirm("Are you sure you want to delete this skill?")) return;
@@ -35,7 +38,9 @@ const SkillList = () => {
     useEffect(() => {
         const fetchSkills = async () => {
             try {
-                const { data } = await api.get('/skills');
+                const { data } = await api.get('/skills', {
+                    params: { search: debouncedSearch }
+                });
                 setSkills(data.data);
             } catch (error) {
                 console.error('Error fetching skills:', error);
@@ -44,7 +49,7 @@ const SkillList = () => {
             }
         };
         fetchSkills();
-    }, []);
+    }, [debouncedSearch]);
 
     if (loading) {
         return (
@@ -96,6 +101,8 @@ const SkillList = () => {
                     </div>
                     <input 
                         type="text" 
+                        value={searchTerm}
+                        onChange={(e) => setSearchTerm(e.target.value)}
                         placeholder="Search skills..." 
                         className="w-full bg-white dark:bg-[#15151A] text-gray-800 dark:text-white border border-gray-200 dark:border-[#2A2A2A] rounded-2xl py-4 pl-12 pr-4 focus:outline-none focus:border-[#38bdf8] transition-colors shadow-sm"
                     />

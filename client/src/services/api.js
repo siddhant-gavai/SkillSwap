@@ -1,8 +1,8 @@
 import axios from 'axios'; // Import axios for API requests
 
 const api = axios.create({
-    baseURL: 'https://skillswap-l8ii.onrender.com/api',
-    timeout: 8000,
+    baseURL: import.meta.env.VITE_API_URL || 'http://localhost:5001/api',
+    timeout: 10000,
     headers: {
         'Content-Type': 'application/json',
     },

@@ -4,11 +4,15 @@ const cors = require('cors');
 const cookieParser = require('cookie-parser');
 const connectDB = require('./config/db');
 const { errorHandler } = require('./middleware/errorMiddleware');
+const logger = require('./middleware/loggerMiddleware');
 
 // Connect to Database
 connectDB();
 
 const app = express();
+
+// Use request logger middleware
+app.use(logger);
 
 // Application Middleware
 app.use(express.json());

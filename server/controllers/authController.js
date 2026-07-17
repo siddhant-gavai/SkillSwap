@@ -19,6 +19,17 @@ exports.register = asyncHandler(async (req, res) => {
         throw new ApiError(400, 'Please add all fields');
     }
 
+    // Email format validation
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(email)) {
+        throw new ApiError(400, 'Please provide a valid email address');
+    }
+
+    // Password length validation
+    if (password.length < 6) {
+        throw new ApiError(400, 'Password must be at least 6 characters long');
+    }
+
     // Check if user exists
     const userExists = await User.findOne({ email });
 

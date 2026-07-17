@@ -9,9 +9,13 @@ const generateToken = (id) => {
     });
 };
 
-// @desc    Register a new user
-// @route   POST /api/auth/register
-// @access  Public
+/**
+ * @desc    Register a new user
+ * @route   POST /api/auth/register
+ * @access  Public
+ * @param   {Object} req - Express request object containing name, email, password
+ * @param   {Object} res - Express response object
+ */
 exports.register = asyncHandler(async (req, res) => {
     const { name, email, password } = req.body;
 
@@ -59,9 +63,13 @@ exports.register = asyncHandler(async (req, res) => {
     }
 });
 
-// @desc    Authenticate a user
-// @route   POST /api/auth/login
-// @access  Public
+/**
+ * @desc    Authenticate a user
+ * @route   POST /api/auth/login
+ * @access  Public
+ * @param   {Object} req - Express request object containing email, password
+ * @param   {Object} res - Express response object
+ */
 exports.login = asyncHandler(async (req, res) => {
     const { email, password } = req.body;
 
@@ -83,9 +91,13 @@ exports.login = asyncHandler(async (req, res) => {
     }
 });
 
-// @desc    Get user data
-// @route   GET /api/auth/me
-// @access  Private
+/**
+ * @desc    Get user data
+ * @route   GET /api/auth/me
+ * @access  Private
+ * @param   {Object} req - Express request object (auth user set by middleware)
+ * @param   {Object} res - Express response object
+ */
 exports.getMe = asyncHandler(async (req, res) => {
     // Find the currently authenticated user
     const user = await User.findById(req.user.id);

@@ -142,3 +142,27 @@ exports.getUserProfile = asyncHandler(async (req, res) => {
     );
 });
 
+/**
+ * @desc    Update user profile
+ * @route   PUT /api/auth/profile
+ * @access  Private
+ */
+exports.updateUserProfile = asyncHandler(async (req, res) => {
+    const { bio, skillsOffered, skillsWanted } = req.body;
+
+    const user = await User.findById(req.user.id);
+    if (!user) {
+        throw new ApiError(404, 'User not found');
+    }
+
+    if (bio !== undefined) user.bio = bio;
+    if (skillsOffered !== undefined) user.skillsOffered = skillsOffered;
+    if (skillsWanted !== undefined) user.skillsWanted = skillsWanted;
+
+    await user.save();
+
+    res.status(200).json(
+        new ApiResponse(200, user, "Profile updated successfully")
+    );
+});
+

@@ -1,15 +1,11 @@
 const express = require('express');
 const router = express.Router();
-const { ApiResponse } = require('../utils/apiResponse');
+const { getRecommendations } = require('../controllers/aiController');
+const { protect } = require('../middleware/authMiddleware');
 
-// @desc    Get AI recommendations (Placeholder)
+// @desc    Get AI recommendations
 // @route   POST /api/ai/recommend
 // @access  Private
-router.post('/recommend', (req, res) => {
-    // Placeholder response
-    res.status(200).json(
-        new ApiResponse(200, [], "AI Recommendations feature coming soon")
-    );
-});
+router.post('/recommend', protect, getRecommendations);
 
 module.exports = router;

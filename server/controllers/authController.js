@@ -106,3 +106,39 @@ exports.getMe = asyncHandler(async (req, res) => {
         new ApiResponse(200, user, "User data fetched successfully")
     );
 });
+
+/**
+ * @desc    Get user profile by ID
+ * @route   GET /api/auth/users/:id
+ * @access  Public
+ */
+exports.getUserProfile = asyncHandler(async (req, res) => {
+    const user = await User.findById(req.params.id);
+
+    if (!user) {
+        throw new ApiError(404, 'User not found');
+    }
+
+    const Review = require('../models/Review');
+    const reviewsCount = await Review.countDocuments({ receiverId: req.params.id });
+
+    // Format response matching frontend expectations
+    const userProfile = {
+        _id: user._id,
+        name: user.name,
+        email: user.email,
+        avatar: user.avatar,
+        role: user.role,
+        bio: user.bio,
+        skillsOffered: user.skillsOffered,
+        skillsWanted: user.skillsWanted,
+        rating: user.rating,
+        createdAt: user.createdAt,
+        reviewsCount
+    };
+
+    res.status(200).json(
+        new ApiResponse(200, userProfile, "User profile fetched successfully")
+    );
+});
+

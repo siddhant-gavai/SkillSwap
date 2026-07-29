@@ -12,6 +12,7 @@ const Dashboard = () => {
     const [mySkills, setMySkills] = useState([]);
     const [sentRequests, setSentRequests] = useState([]);
     const [receivedRequests, setReceivedRequests] = useState([]);
+    const [recommendations, setRecommendations] = useState([]);
     const [loading, setLoading] = useState(true);
     const [isScheduleModalOpen, setIsScheduleModalOpen] = useState(false);
     const [selectedRequest, setSelectedRequest] = useState(null);
@@ -39,14 +40,16 @@ const Dashboard = () => {
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const [skillsRes, sentRes, receivedRes] = await Promise.all([
+                const [skillsRes, sentRes, receivedRes, recRes] = await Promise.all([
                     api.get('/skills/my'),
                     api.get('/requests/sent'),
-                    api.get('/requests/received')
+                    api.get('/requests/received'),
+                    api.post('/ai/recommend')
                 ]);
                 setMySkills(skillsRes.data.data);
                 setSentRequests(sentRes.data.data);
                 setReceivedRequests(receivedRes.data.data);
+                setRecommendations(recRes.data.data || []);
             } catch (error) {
                 console.error('Error fetching dashboard data:', error);
             } finally {
@@ -294,10 +297,51 @@ const Dashboard = () => {
                                         </li>
                                     ))}
                                 </ul>
-                            )}
-                        </div>
                     </div>
                 </div>
+
+                {/* AI Recommendations Section */}
+                {recommendations.length > 0 && (
+                    <div className="mt-12 bg-white dark:bg-[#13131A] p-8 rounded-xl shadow-sm hover:shadow-md border border-gray-200 dark:border-[#2A2A2A] transition-all">
+                        <h2 className="text-2xl font-bold font-heading mb-6 border-l-4 border-indigo-500 pl-3 text-slate-800 dark:text-slate-100">
+                            Recommended for You (AI Matching)
+                        </h2>
+                        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                            {recommendations.map(skill => (
+                                <Link 
+                                    to={`/skills/${skill._id}`} 
+                                    key={skill._id} 
+                                    className="block bg-slate-50 dark:bg-slate-800/40 p-5 rounded-xl border border-gray-150 dark:border-slate-700/60 hover:border-indigo-500 dark:hover:border-indigo-500 transition-all duration-300 group"
+                                >
+                                    <div className="flex justify-between items-start mb-3">
+                                        <span className="bg-indigo-50 dark:bg-indigo-950/40 text-indigo-650 dark:text-indigo-300 text-xs px-2.5 py-1 rounded-full font-semibold uppercase tracking-wider">
+                                            {skill.category}
+                                        </span>
+                                        <span className="text-xs text-gray-500 dark:text-gray-400 font-medium">
+                                            {skill.level}
+                                        </span>
+                                    </div>
+                                    <h3 className="font-bold text-lg text-gray-800 dark:text-slate-100 mb-2 group-hover:text-indigo-600 dark:group-hover:text-indigo-400 transition-colors line-clamp-1">
+                                        {skill.title}
+                                    </h3>
+                                    <p className="text-sm text-gray-500 dark:text-slate-400 mb-4 line-clamp-2">
+                                        {skill.description}
+                                    </p>
+                                    <div className="flex items-center justify-between pt-3 border-t border-gray-100 dark:border-slate-700/60 text-xs">
+                                        <div className="flex items-center gap-2">
+                                            <div className="w-6 h-6 rounded-full bg-indigo-100 dark:bg-indigo-900 flex items-center justify-center font-bold text-indigo-600 dark:text-indigo-200">
+                                                {skill.ownerId?.name?.charAt(0)}
+                                            </div>
+                                            <span className="text-gray-700 dark:text-slate-300 font-medium">
+                                                {skill.ownerId?.name}
+                                            </span>
+                                        </div>
+                                    </div>
+                                </Link>
+                            ))}
+                        </div>
+                    </div>
+                )}
             </div>
 
             <ScheduleSessionModal

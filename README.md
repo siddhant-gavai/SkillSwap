@@ -12,6 +12,8 @@ SkillSwap is a peer-to-peer skill exchange platform where users can trade skills
 - **Exchange Requests**: Request to learn a skill from another user.
 - **Smart Scheduling**: Integration with **Google Meet** for instant sessions and **Google Calendar** for scheduling.
 - **Dashboard**: Manage your offered skills and track sent/received requests.
+- **User Profiles**: View public profiles of other users and customize your bio, offered skills, and learning goals.
+- **AI Recommendations**: Receive tailormade recommendations matching your learning goals (skills wanted).
 - **Reviews**: Rate and review users after exchanges.
 - **Responsive UI**: Built with Tailwind CSS and dark mode support.
 
@@ -67,7 +69,6 @@ SkillSwap is a peer-to-peer skill exchange platform where users can trade skills
 
 ## Future Improvements
 
-- AI-based skill recommendations.
 - Real-time chat for accepted exchanges.
 - In-app video calls (WebRTC).
 - Enhanced dashboard UI and analytics.
@@ -75,3 +76,4 @@ SkillSwap is a peer-to-peer skill exchange platform where users can trade skills
 ## License
 
 This project is licensed under the MIT License.
+

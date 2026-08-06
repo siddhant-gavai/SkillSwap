@@ -122,7 +122,16 @@ const Profile = () => {
                     <div className="flex-grow w-full">
                         <div className="flex flex-col md:flex-row justify-between items-center md:items-start gap-4">
                             <div className="text-center md:text-left">
-                                <h1 className="text-3xl font-bold text-gray-900 dark:text-white">{profile.name}</h1>
+                                <h1 className="text-3xl font-bold text-gray-900 dark:text-white flex items-center gap-2 justify-center md:justify-start">
+                                    {profile.name}
+                                    {profile.isVerified && (
+                                        <span className="inline-flex items-center justify-center bg-sky-100 dark:bg-sky-900/30 text-sky-600 dark:text-sky-400 p-1 rounded-full" title="Verified User">
+                                            <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2.5">
+                                                <path strokeLinecap="round" strokeLinejoin="round" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                                            </svg>
+                                        </span>
+                                    )}
+                                </h1>
                                 <p className="text-gray-500 dark:text-gray-400 mt-1">{profile.email}</p>
                             </div>
                             {isCurrentUser && !isEditing && (

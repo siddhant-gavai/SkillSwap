@@ -7,20 +7,21 @@ SkillSwap is a peer-to-peer skill exchange platform where users can trade skills
 ## Features
 
 - **User Authentication**: Secure JWT-based registration and login.
-- **Skill Listings**: Post skills you offer with categories and levels.
-- **Skill Browsing**: Search and filter skills by category.
+- **Skill Listings**: Post skills you offer with categories and levels, backed by Joi validation on the server.
+- **Skill Browsing**: Search and filter skills by category with real-time debounced searches and input-clear UX.
 - **Exchange Requests**: Request to learn a skill from another user.
 - **Smart Scheduling**: Integration with **Google Meet** for instant sessions and **Google Calendar** for scheduling.
 - **Dashboard**: Manage your offered skills and track sent/received requests.
-- **User Profiles**: View public profiles of other users and customize your bio, offered skills, and learning goals.
+- **User Profiles**: View public profiles of other users, customize your bio/offered skills, and view blue verification badges for verified members.
 - **AI Recommendations**: Receive tailormade recommendations matching your learning goals (skills wanted).
 - **Reviews**: Rate and review users after exchanges.
-- **Responsive UI**: Built with Tailwind CSS and dark mode support.
+- **Responsive UI**: Built with Tailwind CSS, dark mode support, and resilient Error Boundary wrapping.
+- **Logging**: Configurable server request logging outputting to both console and `server/logs/access.log`.
 
 ## Tech Stack
 
-- **Frontend**: React (Vite), Tailwind CSS, Lucide React, Axios.
-- **Backend**: Node.js, Express.js, MongoDB Atlas (Mongoose).
+- **Frontend**: React (Vite), Tailwind CSS, Lucide React, Axios. Includes custom hooks like `useDebounce` and `useLocalStorage`.
+- **Backend**: Node.js, Express.js, MongoDB Atlas (Mongoose), Joi Validation.
 - **Auth**: JSON Web Tokens (JWT), BCrypt.
 
 ## Getting Started

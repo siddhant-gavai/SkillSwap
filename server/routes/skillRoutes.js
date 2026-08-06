@@ -9,16 +9,17 @@ const {
     getMySkills
 } = require('../controllers/skillController');
 const { protect } = require('../middleware/authMiddleware');
+const { validateSkill } = require('../middleware/validationMiddleware');
 
 router.route('/')
     .get(getSkills)
-    .post(protect, createSkill);
+    .post(protect, validateSkill, createSkill);
 
 router.route('/my').get(protect, getMySkills);
 
 router.route('/:id')
     .get(getSkill)
-    .put(protect, updateSkill)
+    .put(protect, validateSkill, updateSkill)
     .delete(protect, deleteSkill);
 
 module.exports = router;

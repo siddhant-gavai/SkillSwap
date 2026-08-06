@@ -44,6 +44,10 @@ const userSchema = new mongoose.Schema({
         type: Number,
         default: 0
     },
+    isVerified: {
+        type: Boolean,
+        default: false
+    },
     embedding: {
         type: [Number], // Vector embedding for AI recommendation
         select: false

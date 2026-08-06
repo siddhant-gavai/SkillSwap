@@ -133,6 +133,7 @@ exports.getUserProfile = asyncHandler(async (req, res) => {
         skillsOffered: user.skillsOffered,
         skillsWanted: user.skillsWanted,
         rating: user.rating,
+        isVerified: user.isVerified || false,
         createdAt: user.createdAt,
         reviewsCount
     };

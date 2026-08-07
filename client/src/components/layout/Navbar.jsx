@@ -87,7 +87,7 @@ const Navbar = () => {
                                         </div>
                                         
                                         <Link 
-                                            to="/profile" 
+                                            to={`/profile/${user._id}`}
                                             onClick={() => setDropdownOpen(false)}
                                             className="block px-4 py-2 text-sm text-slate-700 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-700/50 hover:text-indigo-600 dark:hover:text-indigo-400 transition-colors"
                                         >
@@ -101,11 +101,11 @@ const Navbar = () => {
                                             My Skills
                                         </Link>
                                         <Link 
-                                            to="/settings" 
+                                            to="/skills/new" 
                                             onClick={() => setDropdownOpen(false)}
                                             className="block px-4 py-2 text-sm text-slate-700 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-700/50 hover:text-indigo-600 dark:hover:text-indigo-400 transition-colors"
                                         >
-                                            Settings
+                                            Post a Skill
                                         </Link>
                                         
                                         <div className="border-t border-gray-100 dark:border-slate-700 mt-1 pt-1">

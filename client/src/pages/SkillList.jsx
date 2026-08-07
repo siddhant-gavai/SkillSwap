@@ -17,6 +17,26 @@ const SkillList = () => {
     const [searchTerm, setSearchTerm] = useState('');
     const [selectedCategory, setSelectedCategory] = useState('All');
     const debouncedSearch = useDebounce(searchTerm, 400);
+    const [searchHistory, setSearchHistory] = useState(() => {
+        try {
+            const saved = localStorage.getItem('skill_search_history');
+            return saved ? JSON.parse(saved) : [];
+        } catch {
+            return [];
+        }
+    });
+
+    useEffect(() => {
+        if (debouncedSearch.trim()) {
+            const term = debouncedSearch.trim();
+            setSearchHistory(prev => {
+                const filtered = prev.filter(t => t !== term);
+                const updated = [term, ...filtered].slice(0, 5);
+                localStorage.setItem('skill_search_history', JSON.stringify(updated));
+                return updated;
+            });
+        }
+    }, [debouncedSearch]);
 
     const handleDeleteSkill = async (skillId) => {
         if (!window.confirm("Are you sure you want to delete this skill?")) return;
@@ -122,6 +142,30 @@ const SkillList = () => {
                         </button>
                     )}
                 </div>
+
+                {searchHistory.length > 0 && (
+                    <div className="flex flex-wrap gap-2 mt-3 items-center">
+                        <span className="text-xs text-gray-400 dark:text-[#6A6A6A]">Recent searches:</span>
+                        {searchHistory.map((historyItem, idx) => (
+                            <button
+                                key={idx}
+                                onClick={() => setSearchTerm(historyItem)}
+                                className="text-xs bg-slate-100 hover:bg-slate-200 dark:bg-[#1e1e24] dark:hover:bg-[#2e2e38] text-gray-600 dark:text-[#A0A0A0] px-2 py-1 rounded transition-colors"
+                            >
+                                {historyItem}
+                            </button>
+                        ))}
+                        <button
+                            onClick={() => {
+                                setSearchHistory([]);
+                                localStorage.removeItem('skill_search_history');
+                            }}
+                            className="text-xs text-red-500 hover:text-red-600 dark:hover:text-red-400 ml-1"
+                        >
+                            Clear
+                        </button>
+                    </div>
+                )}
 
                 <div className="flex flex-wrap gap-2 mt-6">
                     {['All', 'Tech', 'Language', 'Music', 'Art', 'Fitness', 'Cooking', 'Other'].map(cat => (

@@ -110,6 +110,20 @@ const SkillList = () => {
         );
     }
 
+    const [categoryCounts, setCategoryCounts] = useState({});
+
+    useEffect(() => {
+        if (selectedCategory === 'All' && !debouncedSearch) {
+            const counts = {};
+            skills.forEach(skill => {
+                const cat = skill.category || 'Other';
+                counts[cat] = (counts[cat] || 0) + 1;
+            });
+            counts['All'] = skills.length;
+            setCategoryCounts(counts);
+        }
+    }, [skills, selectedCategory, debouncedSearch]);
+
     return (
         <Layout>
             <div className="mb-10">
@@ -168,19 +182,32 @@ const SkillList = () => {
                 )}
 
                 <div className="flex flex-wrap gap-2 mt-6">
-                    {['All', 'Tech', 'Language', 'Music', 'Art', 'Fitness', 'Cooking', 'Other'].map(cat => (
-                        <button
-                            key={cat}
-                            onClick={() => setSelectedCategory(cat)}
-                            className={`px-4 py-2 rounded-full text-sm font-semibold transition-all border ${
-                                selectedCategory === cat
-                                    ? 'bg-[#38bdf8] border-[#38bdf8] text-white dark:text-[#0E0E0E]'
-                                    : 'bg-transparent border-gray-200 dark:border-[#2A2A2A] text-gray-600 dark:text-[#A0A0A0] hover:border-gray-400 dark:hover:border-[#4A4A4A]'
-                            }`}
-                        >
-                            {cat}
-                        </button>
-                    ))}
+                    {['All', 'Tech', 'Language', 'Music', 'Art', 'Fitness', 'Cooking', 'Other'].map(cat => {
+                        const count = categoryCounts[cat] !== undefined ? categoryCounts[cat] : 0;
+                        const isSelected = selectedCategory === cat;
+                        return (
+                            <button
+                                key={cat}
+                                onClick={() => setSelectedCategory(cat)}
+                                className={`px-4 py-2 rounded-full text-sm font-semibold transition-all border flex items-center ${
+                                    isSelected
+                                        ? 'bg-[#38bdf8] border-[#38bdf8] text-white dark:text-[#0E0E0E]'
+                                        : 'bg-transparent border-gray-200 dark:border-[#2A2A2A] text-gray-600 dark:text-[#A0A0A0] hover:border-gray-400 dark:hover:border-[#4A4A4A]'
+                                }`}
+                            >
+                                {cat}
+                                {count > 0 && (
+                                    <span className={`ml-1.5 px-1.5 py-0.5 text-[10px] rounded-full font-normal ${
+                                        isSelected 
+                                            ? 'bg-white/30 text-white dark:bg-black/20 dark:text-black' 
+                                            : 'bg-slate-100 dark:bg-[#1e1e24] text-slate-500 dark:text-[#A0A0A0]'
+                                    }`}>
+                                        {count}
+                                    </span>
+                                )}
+                            </button>
+                        );
+                    })}
                 </div>
             </div>
 

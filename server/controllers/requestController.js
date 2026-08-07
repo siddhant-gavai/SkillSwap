@@ -12,6 +12,14 @@ exports.sendRequest = asyncHandler(async (req, res) => {
         throw new ApiError(400, 'Please provide skillId and message');
     }
 
+    if (message.trim().length < 10) {
+        throw new ApiError(400, 'Message must be at least 10 characters long');
+    }
+
+    if (message.length > 500) {
+        throw new ApiError(400, 'Message cannot exceed 500 characters');
+    }
+
     const skill = await Skill.findById(skillId);
     if (!skill) {
         throw new ApiError(404, 'Skill not found');

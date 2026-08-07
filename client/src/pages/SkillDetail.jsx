@@ -95,18 +95,44 @@ const SkillDetail = () => {
                             ) : (
                                 <form onSubmit={handleRequest}>
                                     <textarea
-                                        className="w-full border rounded-lg p-3 mb-4 focus:ring-2 focus:ring-blue-500 focus:outline-none bg-white dark:bg-slate-900 dark:border-slate-600 dark:text-white"
+                                        className={`w-full border rounded-lg p-3 focus:ring-2 focus:outline-none bg-white dark:bg-slate-900 dark:text-white ${
+                                            message.length >= 500
+                                                ? 'border-red-500 focus:ring-red-500'
+                                                : message.length >= 400
+                                                ? 'border-yellow-500 focus:ring-yellow-500'
+                                                : 'border-slate-350 dark:border-slate-600 focus:ring-blue-500'
+                                        }`}
                                         rows="3"
-                                        placeholder="Hi, I'm interested in learning this..."
+                                        placeholder="Hi, I'm interested in learning this... (minimum 10 characters)"
                                         value={message}
                                         onChange={(e) => setMessage(e.target.value)}
+                                        maxLength="500"
                                         required
                                     ></textarea>
-                                    <Button type="submit" variant="primary" className="w-full">
+                                    <div className="flex justify-between items-center mb-4 mt-1">
+                                        {message.length > 0 && message.length < 10 && (
+                                            <span className="text-xs text-red-500">Must be at least 10 characters</span>
+                                        )}
+                                        {message.length >= 400 && (
+                                            <span className={`text-xs ${message.length >= 500 ? 'text-red-500 font-medium' : 'text-yellow-600 dark:text-yellow-500'}`}>
+                                                {message.length >= 500 ? 'Maximum length reached' : 'Approaching character limit'}
+                                            </span>
+                                        )}
+                                        <p className={`text-xs ml-auto ${
+                                            message.length >= 500 
+                                                ? 'text-red-500 font-bold' 
+                                                : message.length >= 400 
+                                                ? 'text-yellow-600 dark:text-yellow-500 font-semibold' 
+                                                : 'text-gray-400'
+                                        }`}>
+                                            {message.length}/500
+                                        </p>
+                                    </div>
+                                    <Button type="submit" variant="primary" className="w-full" disabled={message.trim().length < 10}>
                                         Send Request
                                     </Button>
                                     {requestStatus === 'error' && (
-                                        <p className="text-red-500 mt-2 text-sm">Failed to send request. Try again.</p>
+                                        <p className="text-red-500 mt-2 text-sm">Failed to send request. Make sure message is at least 10 chars.</p>
                                     )}
                                 </form>
                             )}

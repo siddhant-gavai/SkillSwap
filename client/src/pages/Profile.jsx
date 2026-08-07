@@ -151,12 +151,33 @@ const Profile = () => {
                                     <textarea
                                         value={bio}
                                         onChange={(e) => setBio(e.target.value)}
-                                        className="w-full border rounded-lg p-3 focus:ring-2 focus:ring-indigo-500 focus:outline-none bg-white dark:bg-slate-900 dark:border-slate-700 dark:text-white"
+                                        className={`w-full border rounded-lg p-3 focus:ring-2 focus:outline-none bg-white dark:bg-slate-900 dark:border-slate-700 dark:text-white ${
+                                            bio.length >= 500 
+                                                ? 'border-red-500 focus:ring-red-500' 
+                                                : bio.length >= 400 
+                                                ? 'border-yellow-500 focus:ring-yellow-500' 
+                                                : 'border-gray-300 dark:border-slate-700 focus:ring-indigo-500'
+                                        }`}
                                         rows="3"
                                         maxLength="500"
                                         placeholder="Tell other users about yourself..."
                                     />
-                                    <p className="text-right text-xs text-gray-400 mt-1">{bio.length}/500</p>
+                                    <div className="flex justify-between items-center mt-1">
+                                        {bio.length >= 400 && (
+                                            <span className={`text-xs ${bio.length >= 500 ? 'text-red-500 font-medium' : 'text-yellow-600 dark:text-yellow-500'}`}>
+                                                {bio.length >= 500 ? 'Maximum length reached' : 'Approaching character limit'}
+                                            </span>
+                                        )}
+                                        <p className={`text-xs ml-auto ${
+                                            bio.length >= 500 
+                                                ? 'text-red-500 font-bold animate-pulse' 
+                                                : bio.length >= 400 
+                                                ? 'text-yellow-600 dark:text-yellow-500 font-semibold' 
+                                                : 'text-gray-400'
+                                        }`}>
+                                            {bio.length}/500
+                                        </p>
+                                    </div>
                                 </div>
                                 <div>
                                     <label className="block text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wider mb-2">Skills You Offer (comma separated)</label>

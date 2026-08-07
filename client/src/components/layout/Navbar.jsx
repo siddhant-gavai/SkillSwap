@@ -2,14 +2,27 @@ import React, { useState, useRef, useEffect } from 'react'; // Import React hook
 import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '../../context/AuthContext';
 import Button from '../common/Button';
-
 import ThemeToggle from '../common/ThemeToggle';
+import api from '../../services/api';
 
 const Navbar = () => {
     const { user, logout } = useAuth();
     const navigate = useNavigate();
     const [dropdownOpen, setDropdownOpen] = useState(false);
     const dropdownRef = useRef(null);
+    const [apiHealthy, setApiHealthy] = useState(null);
+
+    useEffect(() => {
+        const checkHealth = async () => {
+            try {
+                await api.get('/skills', { params: { limit: 1 } });
+                setApiHealthy(true);
+            } catch (err) {
+                setApiHealthy(false);
+            }
+        };
+        checkHealth();
+    }, []);
 
     // Close dropdown on outside click or Escape key
     useEffect(() => {
@@ -44,7 +57,7 @@ const Navbar = () => {
         <nav className="bg-white dark:bg-[#0E0E0E] sticky top-0 z-50 border-b border-gray-200 dark:border-[#2A2A2A]">
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                 <div className="flex justify-between h-16">
-                    <div className="flex items-center">
+                    <div className="flex items-center space-x-4">
                         <Link to="/" className="flex items-center space-x-2 group">
                             <div className="bg-[#38bdf8] p-2 rounded-lg">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-white dark:text-[#0E0E0E] w-5 h-5"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"></path><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"></path></svg>
@@ -53,6 +66,18 @@ const Navbar = () => {
                                 SkillSwap
                             </span>
                         </Link>
+                        <div className="flex items-center space-x-1.5 bg-slate-50 dark:bg-slate-900/50 border border-slate-200/60 dark:border-slate-800/80 px-2.5 py-1 rounded-full" title={apiHealthy === true ? "API Connected" : apiHealthy === false ? "API Disconnected" : "Checking API..."}>
+                            <span className={`w-2 h-2 rounded-full ${
+                                apiHealthy === true 
+                                    ? 'bg-emerald-500 shadow-[0_0_8px_rgba(16,185,129,0.6)]' 
+                                    : apiHealthy === false 
+                                    ? 'bg-red-500 animate-pulse shadow-[0_0_8px_rgba(239,68,68,0.6)]' 
+                                    : 'bg-yellow-400 animate-pulse'
+                            }`} />
+                            <span className="text-[10px] font-bold tracking-wider uppercase text-slate-500 dark:text-[#A0A0A0]">
+                                {apiHealthy === true ? "API Online" : apiHealthy === false ? "API Offline" : "Connecting"}
+                            </span>
+                        </div>
                     </div>
 
                     <div className="flex items-center space-x-6">

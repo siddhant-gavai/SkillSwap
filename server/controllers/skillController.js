@@ -5,7 +5,7 @@ const { ApiResponse, ApiError, asyncHandler } = require('../utils/apiResponse');
 // @route   GET /api/skills
 // @access  Public
 exports.getSkills = asyncHandler(async (req, res) => {
-    const { search, category, level } = req.query;
+    const { search, category, level, page, limit } = req.query;
     
     let query = {};
     
@@ -24,7 +24,19 @@ exports.getSkills = asyncHandler(async (req, res) => {
         ];
     }
 
-    const skills = await Skill.find(query).populate('ownerId', 'name email');
+    let skills;
+    if (page || limit) {
+        const pageNum = parseInt(page, 10) || 1;
+        const limitNum = parseInt(limit, 10) || 10;
+        const startIndex = (pageNum - 1) * limitNum;
+        skills = await Skill.find(query)
+            .populate('ownerId', 'name email')
+            .skip(startIndex)
+            .limit(limitNum);
+    } else {
+        skills = await Skill.find(query).populate('ownerId', 'name email');
+    }
+    
     res.status(200).json(new ApiResponse(200, skills, "Skills fetched successfully"));
 });
 

@@ -4,6 +4,7 @@ import Layout from '../components/layout/Layout';
 import api from '../services/api';
 import Button from '../components/common/Button';
 import { useAuth } from '../context/AuthContext';
+import { ArrowLeft, Share2, Check } from 'lucide-react';
 
 const SkillDetail = () => {
     const { id } = useParams();
@@ -13,6 +14,13 @@ const SkillDetail = () => {
     const [loading, setLoading] = useState(true);
     const [message, setMessage] = useState('');
     const [requestStatus, setRequestStatus] = useState(null);
+    const [shareCopied, setShareCopied] = useState(false);
+
+    const handleShare = () => {
+        navigator.clipboard.writeText(window.location.href);
+        setShareCopied(true);
+        setTimeout(() => setShareCopied(false), 2000);
+    };
 
     useEffect(() => {
         const fetchSkill = async () => {
@@ -55,6 +63,30 @@ const SkillDetail = () => {
 
     return (
         <Layout>
+            <div className="max-w-3xl mx-auto mb-4 flex justify-between items-center px-2">
+                <button 
+                    onClick={() => navigate('/skills')}
+                    className="flex items-center text-slate-600 dark:text-[#A0A0A0] hover:text-slate-900 dark:hover:text-white transition-colors text-sm font-semibold focus:outline-none"
+                >
+                    <ArrowLeft size={16} className="mr-1.5" /> Back to browse
+                </button>
+                <button
+                    onClick={handleShare}
+                    className="flex items-center text-xs text-slate-600 dark:text-[#A0A0A0] hover:text-slate-900 dark:hover:text-white border border-slate-200 dark:border-slate-700 rounded-lg px-2.5 py-1.5 bg-white dark:bg-slate-800 transition-colors focus:outline-none shadow-sm hover:shadow"
+                >
+                    {shareCopied ? (
+                        <>
+                            <Check size={14} className="mr-1 text-emerald-500" />
+                            <span className="text-emerald-500 font-medium">Link Copied!</span>
+                        </>
+                    ) : (
+                        <>
+                            <Share2 size={14} className="mr-1" />
+                            <span>Share Skill</span>
+                        </>
+                    )}
+                </button>
+            </div>
             <div className="max-w-3xl mx-auto bg-white dark:bg-slate-800 rounded-lg shadow-lg overflow-hidden transition-colors duration-300">
                 <div className="bg-blue-600 px-6 py-4">
                     <div className="flex justify-between items-center text-white">

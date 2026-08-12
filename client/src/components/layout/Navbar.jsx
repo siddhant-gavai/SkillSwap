@@ -15,7 +15,7 @@ const Navbar = () => {
     useEffect(() => {
         const checkHealth = async () => {
             try {
-                await api.get('/skills', { params: { limit: 1 } });
+                await api.get('/health');
                 setApiHealthy(true);
             } catch (err) {
                 setApiHealthy(false);

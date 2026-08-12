@@ -17,6 +17,9 @@ SkillSwap is a peer-to-peer skill exchange platform where users can trade skills
 - **Reviews**: Rate and review users after exchanges.
 - **Responsive UI**: Built with Tailwind CSS, dark mode support, and resilient Error Boundary wrapping.
 - **Logging**: Configurable server request logging outputting to both console and `server/logs/access.log`.
+- **Health Check API**: Dedicated `/api/health` endpoint verifying database connection and server uptime, reducing query overhead on Navbar status checks.
+- **Backward-Compatible Pagination**: Native support for `page` and `limit` query parameters on the Skill listing API endpoint.
+- **UX Enhancements**: Easy Google Meet link copying in the Dashboard, detail-sharing tools, input length validation, and a loading button spinner.
 
 ## Tech Stack
 

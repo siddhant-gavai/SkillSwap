@@ -26,6 +26,17 @@ app.use('/api/skills', require('./routes/skillRoutes'));
 app.use('/api/requests', require('./routes/requestRoutes'));
 app.use('/api/ai', require('./routes/aiRoutes'));
 
+// Health Check Route
+app.get('/api/health', (req, res) => {
+    const mongoose = require('mongoose');
+    const dbStatus = mongoose.connection.readyState === 1 ? 'UP' : 'DOWN';
+    res.status(200).json({
+        status: 'UP',
+        dbStatus,
+        timestamp: new Date()
+    });
+});
+
 // Global Error Handler Setup
 app.use(errorHandler);
 

@@ -5,7 +5,7 @@ import api from '../services/api';
 import Button from '../components/common/Button';
 import { Link } from 'react-router-dom';
 import ScheduleSessionModal from '../components/modals/ScheduleSessionModal';
-import { Calendar, Clock, Video, Trash2 } from 'lucide-react';
+import { Calendar, Clock, Video, Trash2, Copy, Check } from 'lucide-react';
 
 const Dashboard = () => {
     const { user } = useAuth();
@@ -18,6 +18,13 @@ const Dashboard = () => {
     const [selectedRequest, setSelectedRequest] = useState(null);
     const [deletingSkillId, setDeletingSkillId] = useState(null);
     const [actionMessage, setActionMessage] = useState(null);
+    const [copiedMeetingId, setCopiedMeetingId] = useState(null);
+
+    const handleCopyMeetingLink = (id, link) => {
+        navigator.clipboard.writeText(link);
+        setCopiedMeetingId(id);
+        setTimeout(() => setCopiedMeetingId(null), 2000);
+    };
 
     const handleDeleteSkill = async (skillId) => {
         if (!window.confirm("Are you sure you want to delete this skill?")) return;
@@ -153,11 +160,30 @@ const Dashboard = () => {
                                             {session.scheduledTime} <span className="text-xs text-slate-500 ml-1">({session.duration} min)</span>
                                         </div>
                                         {session.meetingLink && (
-                                            <div className="flex items-center mt-3 pt-3 border-t border-slate-200 dark:border-slate-600">
-                                                <Video size={16} className="mr-2 text-green-500" />
-                                                <a href={session.meetingLink} target="_blank" rel="noopener noreferrer" className="text-blue-600 dark:text-blue-400 hover:text-blue-700 dark:hover:text-blue-300 font-medium hover:underline truncate transition-colors">
-                                                    Join Meeting
-                                                </a>
+                                            <div className="flex items-center justify-between mt-3 pt-3 border-t border-slate-200 dark:border-slate-600">
+                                                <div className="flex items-center">
+                                                    <Video size={16} className="mr-2 text-green-500" />
+                                                    <a href={session.meetingLink} target="_blank" rel="noopener noreferrer" className="text-blue-600 dark:text-blue-400 hover:text-blue-700 dark:hover:text-blue-300 font-medium hover:underline truncate transition-colors">
+                                                        Join Meeting
+                                                    </a>
+                                                </div>
+                                                <button
+                                                    onClick={() => handleCopyMeetingLink(session._id, session.meetingLink)}
+                                                    className="flex items-center text-xs text-slate-500 dark:text-slate-400 hover:text-slate-800 dark:hover:text-slate-200 focus:outline-none transition-colors border border-slate-200 dark:border-slate-700 rounded px-1.5 py-0.5 bg-slate-50 dark:bg-slate-800"
+                                                    title="Copy Meeting Link"
+                                                >
+                                                    {copiedMeetingId === session._id ? (
+                                                        <>
+                                                            <Check size={12} className="mr-1 text-emerald-500" />
+                                                            <span className="text-emerald-500">Copied</span>
+                                                        </>
+                                                    ) : (
+                                                        <>
+                                                            <Copy size={12} className="mr-1" />
+                                                            <span>Copy Link</span>
+                                                        </>
+                                                    )}
+                                                </button>
                                             </div>
                                         )}
                                     </div>

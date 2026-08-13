@@ -7,21 +7,29 @@ if (!fs.existsSync(logsDir)) {
 }
 const logFilePath = path.join(logsDir, 'access.log');
 
+// Create a write stream for better write performance and resource reuse
+const logStream = fs.createWriteStream(logFilePath, { flags: 'a' });
+
+logStream.on('error', (err) => {
+    console.error('Logging write stream error:', err);
+});
+
 const logger = (req, res, next) => {
     const start = Date.now();
     res.on('finish', () => {
         const duration = Date.now() - start;
-        const logLine = `[${new Date().toISOString()}] ${req.method} ${req.originalUrl} ${res.statusCode} - ${duration}ms\n`;
+        
+        // Sanitize sensitive info in request url (e.g., tokens or passwords if any)
+        let sanitizedUrl = req.originalUrl;
+        sanitizedUrl = sanitizedUrl.replace(/(token|password|secret)=([^&]+)/gi, '$1=[REDACTED]');
+        
+        const logLine = `[${new Date().toISOString()}] ${req.method} ${sanitizedUrl} ${res.statusCode} - ${duration}ms\n`;
         
         // Print to console
         console.log(logLine.trim());
         
-        // Append to log file
-        fs.appendFile(logFilePath, logLine, (err) => {
-            if (err) {
-                console.error('Error writing to access log file:', err);
-            }
-        });
+        // Write to stream
+        logStream.write(logLine);
     });
     next();
 };

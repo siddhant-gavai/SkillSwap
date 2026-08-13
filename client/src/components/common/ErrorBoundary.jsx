@@ -48,6 +48,15 @@ export class ErrorBoundary extends React.Component {
                             >
                                 Try Again
                             </button>
+                            <button
+                                onClick={() => {
+                                    this.setState({ hasError: false, error: null });
+                                    window.location.href = '/';
+                                }}
+                                className="w-full flex justify-center py-2.5 px-4 border border-transparent rounded-lg text-sm font-medium text-indigo-600 dark:text-indigo-400 bg-indigo-50 dark:bg-indigo-950/40 hover:bg-indigo-100 dark:hover:bg-indigo-900/60 focus:outline-none transition-colors duration-200"
+                            >
+                                Go to Home Page
+                            </button>
                         </div>
                         {this.state.error && (
                             <div className="mt-4 p-3 bg-gray-100 dark:bg-gray-900 rounded-lg text-xs font-mono text-gray-600 dark:text-gray-400 overflow-auto max-h-32 text-left">

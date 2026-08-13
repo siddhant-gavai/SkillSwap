@@ -81,3 +81,22 @@ SkillSwap is a peer-to-peer skill exchange platform where users can trade skills
 
 This project is licensed under the MIT License.
 
+## Developer Guidelines
+
+### 1. Request Payload Validation
+All request payloads (e.g., skill creations, user registrations, logins) are validated using **Joi** schemas defined in `server/middleware/validationMiddleware.js`. Ensure you keep schemas updated when adding database fields.
+
+### 2. Frontend API Errors
+When using the Axios client (`client/src/services/api.js`), a custom property `apiMessage` is automatically attached to rejected promises:
+```javascript
+try {
+    await api.post('/some-route');
+} catch (error) {
+    // Easily display server error messages in UI
+    console.error(error.apiMessage);
+}
+```
+
+### 3. Server Logging
+Requests are processed by a stream-based logger middleware that redacts query parameters containing passwords, secrets, or authorization tokens to maintain secure audit trails.
+

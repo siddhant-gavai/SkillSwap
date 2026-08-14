@@ -75,6 +75,20 @@ const SkillList = () => {
         fetchSkills();
     }, [debouncedSearch, selectedCategory]);
 
+    const [categoryCounts, setCategoryCounts] = useState({});
+
+    useEffect(() => {
+        if (selectedCategory === 'All' && !debouncedSearch) {
+            const counts = {};
+            skills.forEach(skill => {
+                const cat = skill.category || 'Other';
+                counts[cat] = (counts[cat] || 0) + 1;
+            });
+            counts['All'] = skills.length;
+            setCategoryCounts(counts);
+        }
+    }, [skills, selectedCategory, debouncedSearch]);
+
     if (loading) {
         return (
             <Layout>
@@ -109,20 +123,6 @@ const SkillList = () => {
             </Layout>
         );
     }
-
-    const [categoryCounts, setCategoryCounts] = useState({});
-
-    useEffect(() => {
-        if (selectedCategory === 'All' && !debouncedSearch) {
-            const counts = {};
-            skills.forEach(skill => {
-                const cat = skill.category || 'Other';
-                counts[cat] = (counts[cat] || 0) + 1;
-            });
-            counts['All'] = skills.length;
-            setCategoryCounts(counts);
-        }
-    }, [skills, selectedCategory, debouncedSearch]);
 
     return (
         <Layout>

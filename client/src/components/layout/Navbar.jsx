@@ -10,13 +10,15 @@ const Navbar = () => {
     const navigate = useNavigate();
     const [dropdownOpen, setDropdownOpen] = useState(false);
     const dropdownRef = useRef(null);
-    const [apiHealthy, setApiHealthy] = useState(null);
+        const [apiHealthy, setApiHealthy] = useState(null);
+    const [healthData, setHealthData] = useState(null);
 
     useEffect(() => {
         const checkHealth = async () => {
             try {
-                await api.get('/health');
+                const res = await api.get('/health');
                 setApiHealthy(true);
+                setHealthData(res.data);
             } catch (err) {
                 setApiHealthy(false);
             }
@@ -66,7 +68,7 @@ const Navbar = () => {
                                 SkillSwap
                             </span>
                         </Link>
-                        <div className="flex items-center space-x-1.5 bg-slate-50 dark:bg-slate-900/50 border border-slate-200/60 dark:border-slate-800/80 px-2.5 py-1 rounded-full" title={apiHealthy === true ? "API Connected" : apiHealthy === false ? "API Disconnected" : "Checking API..."}>
+                        <div className="flex items-center space-x-1.5 bg-slate-50 dark:bg-slate-900/50 border border-slate-200/60 dark:border-slate-800/80 px-2.5 py-1 rounded-full" title={apiHealthy === true ? `API Connected | DB: ${healthData?.dbStatus || 'UP'} | Node: ${healthData?.nodeVersion || ''}` : apiHealthy === false ? "API Disconnected" : "Checking API..."}>
                             <span className={`w-2 h-2 rounded-full ${
                                 apiHealthy === true 
                                     ? 'bg-emerald-500 shadow-[0_0_8px_rgba(16,185,129,0.6)]' 

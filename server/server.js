@@ -33,6 +33,9 @@ app.get('/api/health', (req, res) => {
     res.status(200).json({
         status: 'UP',
         dbStatus,
+        uptime: process.uptime(),
+        memoryUsage: process.memoryUsage(),
+        nodeVersion: process.version,
         timestamp: new Date()
     });
 });

@@ -135,3 +135,17 @@ exports.getMySkills = asyncHandler(async (req, res) => {
     const skills = await Skill.find({ ownerId: req.user.id });
     res.status(200).json(new ApiResponse(200, skills, "User skills fetched successfully"));
 });
+
+// @desc    Get all unique categories and their skill counts
+// @route   GET /api/skills/categories
+// @access  Public
+exports.getSkillsCategories = asyncHandler(async (req, res) => {
+    const categories = Skill.schema.path('category').enumValues;
+    const stats = await Promise.all(
+        categories.map(async (cat) => {
+            const count = await Skill.countDocuments({ category: cat });
+            return { category: cat, count };
+        })
+    );
+    res.status(200).json(new ApiResponse(200, stats, "Skill categories fetched successfully"));
+});

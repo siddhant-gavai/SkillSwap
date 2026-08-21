@@ -6,7 +6,8 @@ const {
     createSkill,
     updateSkill,
     deleteSkill,
-    getMySkills
+    getMySkills,
+    getSkillsCategories
 } = require('../controllers/skillController');
 const { protect } = require('../middleware/authMiddleware');
 const { validateSkill } = require('../middleware/validationMiddleware');
@@ -16,6 +17,7 @@ router.route('/')
     .post(protect, validateSkill, createSkill);
 
 router.route('/my').get(protect, getMySkills);
+router.route('/categories').get(getSkillsCategories);
 
 router.route('/:id')
     .get(getSkill)

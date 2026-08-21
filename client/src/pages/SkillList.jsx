@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import Layout from '../components/layout/Layout';
-import api from '../services/api';
+import { getSkills, deleteSkill, getCategories } from '../services/skills';
 import { Link } from 'react-router-dom';
 import Button from '../components/common/Button';
 import { useAuth } from '../context/AuthContext';
@@ -43,10 +43,12 @@ const SkillList = () => {
         
         setDeletingSkillId(skillId);
         try {
-            await api.delete(`/skills/${skillId}`);
+            await deleteSkill(skillId);
             setSkills(skills.filter(s => s._id !== skillId));
             setActionMessage({ type: 'success', text: 'Skill deleted successfully' });
             setTimeout(() => setActionMessage(null), 3000);
+            // Refresh category counts
+            fetchCategoryStats();
         } catch (error) {
             console.error('Error deleting skill:', error);
             setActionMessage({ type: 'error', text: 'Failed to delete skill' });
@@ -56,14 +58,28 @@ const SkillList = () => {
         }
     };
 
+    const fetchCategoryStats = async () => {
+        try {
+            const data = await getCategories();
+            const counts = {};
+            let total = 0;
+            data.data.forEach(item => {
+                counts[item.category] = item.count;
+                total += item.count;
+            });
+            counts['All'] = total;
+            setCategoryCounts(counts);
+        } catch (error) {
+            console.error('Error fetching categories stats:', error);
+        }
+    };
+
     useEffect(() => {
         const fetchSkills = async () => {
             try {
-                const { data } = await api.get('/skills', {
-                    params: { 
-                        search: debouncedSearch,
-                        category: selectedCategory === 'All' ? undefined : selectedCategory
-                    }
+                const data = await getSkills({ 
+                    search: debouncedSearch,
+                    category: selectedCategory === 'All' ? undefined : selectedCategory
                 });
                 setSkills(data.data);
             } catch (error) {
@@ -78,16 +94,8 @@ const SkillList = () => {
     const [categoryCounts, setCategoryCounts] = useState({});
 
     useEffect(() => {
-        if (selectedCategory === 'All' && !debouncedSearch) {
-            const counts = {};
-            skills.forEach(skill => {
-                const cat = skill.category || 'Other';
-                counts[cat] = (counts[cat] || 0) + 1;
-            });
-            counts['All'] = skills.length;
-            setCategoryCounts(counts);
-        }
-    }, [skills, selectedCategory, debouncedSearch]);
+        fetchCategoryStats();
+    }, [skills.length]);
 
     if (loading) {
         return (

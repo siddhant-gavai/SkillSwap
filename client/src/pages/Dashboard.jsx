@@ -328,7 +328,6 @@ const Dashboard = () => {
                     </div>
                 </div>
             </div>
-        </div>
 
         {/* AI Recommendations Section */}
         {recommendations.length > 0 && (

@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import Layout from '../components/layout/Layout';
 import Input from '../components/common/Input';
 import Button from '../components/common/Button';
-import api from '../services/api';
+import { createSkill } from '../services/skills';
 
 const AddSkill = () => {
     const navigate = useNavigate();
@@ -23,10 +23,10 @@ const AddSkill = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
-            await api.post('/skills', formData);
+            await createSkill(formData);
             navigate('/dashboard');
         } catch (err) {
-            setError(err.response?.data?.message || 'Failed to create skill');
+            setError(err.response?.data?.message || err.apiMessage || 'Failed to create skill');
         }
     };
 
